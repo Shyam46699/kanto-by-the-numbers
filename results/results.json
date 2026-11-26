@@ -1,0 +1,619 @@
+{
+  "n_pokemon": 151,
+  "strength": "total of the six battle stats",
+  "q1_rarity": {
+    "overall": {
+      "rho": 0.727,
+      "ci95": [
+        0.612,
+        0.817
+      ],
+      "p": 9.999000099990002e-05,
+      "n": 151,
+      "verdict": "strong positive link",
+      "scipy_p": 4.208066644998406e-26
+    },
+    "best_value": [
+      "Arcanine",
+      "Ninetales",
+      "Cloyster",
+      "Muk",
+      "Golduck"
+    ],
+    "worst_value": [
+      "Ditto",
+      "Dratini",
+      "Charmander",
+      "Squirtle",
+      "Bulbasaur"
+    ],
+    "legendaries": [
+      {
+        "name": "Mew",
+        "capture_rate": 45,
+        "total": 600
+      },
+      {
+        "name": "Mewtwo",
+        "capture_rate": 3,
+        "total": 680
+      },
+      {
+        "name": "Moltres",
+        "capture_rate": 3,
+        "total": 580
+      },
+      {
+        "name": "Zapdos",
+        "capture_rate": 3,
+        "total": 580
+      },
+      {
+        "name": "Articuno",
+        "capture_rate": 3,
+        "total": 580
+      }
+    ],
+    "strength_rank_of_legendaries": {
+      "Articuno": 4,
+      "Zapdos": 4,
+      "Moltres": 4,
+      "Mewtwo": 1,
+      "Mew": 2
+    }
+  },
+  "q2_size": {
+    "weight_overall": {
+      "rho": 0.718,
+      "ci95": [
+        0.614,
+        0.798
+      ],
+      "p": 9.999000099990002e-05,
+      "n": 151,
+      "verdict": "strong positive link",
+      "scipy_p": 2.889565530445527e-25
+    },
+    "height_overall": {
+      "rho": 0.721,
+      "ci95": [
+        0.605,
+        0.814
+      ],
+      "p": 9.999000099990002e-05,
+      "n": 151,
+      "verdict": "strong positive link",
+      "scipy_p": 1.5682072684407593e-25
+    },
+    "within_stage": {
+      "1": {
+        "n": 79,
+        "weight": {
+          "rho": 0.709,
+          "ci95": [
+            0.55,
+            0.82
+          ],
+          "p": 9.999000099990002e-05,
+          "n": 79,
+          "verdict": "strong positive link",
+          "scipy_p": 2.7098176873128235e-13
+        },
+        "median_weight_kg": 15.0,
+        "median_total": 325.0
+      },
+      "2": {
+        "n": 56,
+        "weight": {
+          "rho": 0.522,
+          "ci95": [
+            0.276,
+            0.719
+          ],
+          "p": 9.999000099990002e-05,
+          "n": 56,
+          "verdict": "strong positive link",
+          "scipy_p": 3.692268681061005e-05
+        },
+        "median_weight_kg": 32.65,
+        "median_total": 452.5
+      },
+      "3": {
+        "n": 16,
+        "weight": {
+          "rho": 0.726,
+          "ci95": [
+            0.296,
+            0.941
+          ],
+          "p": 0.0016998300169983002,
+          "n": 16,
+          "verdict": "strong positive link",
+          "scipy_p": 0.0014579900473514003
+        },
+        "median_weight_kg": 57.0,
+        "median_total": 502.5
+      }
+    },
+    "stage_vs_weight": {
+      "rho": 0.393,
+      "ci95": [
+        0.248,
+        0.521
+      ],
+      "p": 9.999000099990002e-05,
+      "n": 151,
+      "verdict": "moderate positive link",
+      "scipy_p": 6.164620851914178e-07
+    },
+    "stage_vs_total": {
+      "rho": 0.537,
+      "ci95": [
+        0.398,
+        0.661
+      ],
+      "p": 9.999000099990002e-05,
+      "n": 151,
+      "verdict": "strong positive link",
+      "scipy_p": 1.149561389042814e-12
+    }
+  },
+  "q3_speed": {
+    "overall": {
+      "rho": 0.155,
+      "ci95": [
+        0.009,
+        0.294
+      ],
+      "p": 0.05929407059294071,
+      "n": 151,
+      "verdict": "no clear link",
+      "scipy_p": 0.05710863446175221
+    },
+    "fully_evolved": {
+      "rho": -0.358,
+      "ci95": [
+        -0.547,
+        -0.149
+      ],
+      "p": 0.0015998400159984002,
+      "n": 81,
+      "verdict": "moderate negative link",
+      "scipy_p": 0.0010436235444169272
+    },
+    "not_fully_evolved": {
+      "rho": -0.412,
+      "ci95": [
+        -0.586,
+        -0.209
+      ],
+      "p": 0.00039996000399960006,
+      "n": 70,
+      "verdict": "moderate negative link",
+      "scipy_p": 0.0003875721029907763
+    },
+    "group_medians": {
+      "fully_evolved": {
+        "speed": 80.0,
+        "toughness": 235.0
+      },
+      "not_fully_evolved": {
+        "speed": 55.0,
+        "toughness": 155.0
+      }
+    },
+    "fast_and_tough": [
+      "Mewtwo",
+      "Mew",
+      "Tentacruel",
+      "Zapdos",
+      "Tauros",
+      "Ninetales",
+      "Charizard",
+      "Kangaskhan",
+      "Moltres",
+      "Arcanine"
+    ],
+    "slow_and_fragile": [
+      "Metapod",
+      "Kakuna",
+      "Bellsprout",
+      "Paras",
+      "Caterpie",
+      "Machop",
+      "Nidoran♀",
+      "Shellder",
+      "Magnemite"
+    ],
+    "fast_but_fragile": [
+      "Diglett",
+      "Kadabra",
+      "Abra",
+      "Dugtrio",
+      "Meowth",
+      "Voltorb",
+      "Poliwag",
+      "Pikachu",
+      "Haunter"
+    ],
+    "slow_but_tough": [
+      "Snorlax",
+      "Slowbro",
+      "Rhydon",
+      "Lickitung",
+      "Golem",
+      "Marowak"
+    ]
+  },
+  "q4_colour": {
+    "association": {
+      "observed": 0.4779133988149945,
+      "chance_median": 0.2913511590879903,
+      "chance_95th": 0.33478243863932444,
+      "p": 9.999000099990002e-05,
+      "n_shuffles": 10000
+    },
+    "note": "Cramér's V between colour and primary type; 0 = no link, 1 = colour decides type",
+    "top_pairs": [
+      {
+        "color": "green",
+        "type": "Grass",
+        "count": 6,
+        "color_n": 9,
+        "share": 0.667,
+        "overall_share": 0.093,
+        "lift": 7.19,
+        "p": 9.999000099990002e-05,
+        "rule_breakers": [
+          "Caterpie",
+          "Metapod",
+          "Scyther"
+        ]
+      },
+      {
+        "color": "pink",
+        "type": "Psychic",
+        "count": 5,
+        "color_n": 12,
+        "share": 0.417,
+        "overall_share": 0.093,
+        "lift": 4.49,
+        "p": 0.0018998100189981002,
+        "rule_breakers": [
+          "Clefairy",
+          "Clefable",
+          "Jigglypuff",
+          "Wigglytuff",
+          "Lickitung",
+          "Chansey",
+          "Porygon"
+        ]
+      },
+      {
+        "color": "yellow",
+        "type": "Electric",
+        "count": 5,
+        "color_n": 19,
+        "share": 0.263,
+        "overall_share": 0.06,
+        "lift": 4.42,
+        "p": 0.0017998200179982,
+        "rule_breakers": [
+          "Kakuna",
+          "Beedrill",
+          "Sandshrew",
+          "Sandslash",
+          "Ninetales",
+          "Meowth",
+          "Persian",
+          "Psyduck",
+          "Ponyta",
+          "Rapidash",
+          "Drowzee",
+          "Hypno",
+          "Exeggutor",
+          "Moltres"
+        ]
+      },
+      {
+        "color": "red",
+        "type": "Fire",
+        "count": 5,
+        "color_n": 16,
+        "share": 0.312,
+        "overall_share": 0.079,
+        "lift": 3.93,
+        "p": 0.0040995900409959,
+        "rule_breakers": [
+          "Vileplume",
+          "Paras",
+          "Parasect",
+          "Krabby",
+          "Kingler",
+          "Voltorb",
+          "Electrode",
+          "Goldeen",
+          "Seaking",
+          "Jynx",
+          "Magikarp"
+        ]
+      },
+      {
+        "color": "pink",
+        "type": "Normal",
+        "count": 7,
+        "color_n": 12,
+        "share": 0.583,
+        "overall_share": 0.159,
+        "lift": 3.67,
+        "p": 0.0007999200079992001,
+        "rule_breakers": [
+          "Slowpoke",
+          "Slowbro",
+          "Exeggcute",
+          "Mr. Mime",
+          "Mew"
+        ]
+      }
+    ]
+  },
+  "q5_evolution": {
+    "test": {
+      "observed_mean": 139.15277777777777,
+      "p": 9.999000099990002e-05,
+      "n_pairs": 72,
+      "n_shuffles": 10000
+    },
+    "n_pairs": 72,
+    "median_gain_points": 140.0,
+    "median_gain_pct": 42.5,
+    "pairs_that_got_weaker": [],
+    "biggest_glow_ups": [
+      {
+        "from": "Magikarp",
+        "to": "Gyarados",
+        "from_total": 200,
+        "to_total": 540,
+        "gain_pct": 170.0
+      },
+      {
+        "from": "Kakuna",
+        "to": "Beedrill",
+        "from_total": 205,
+        "to_total": 395,
+        "gain_pct": 92.7
+      },
+      {
+        "from": "Metapod",
+        "to": "Butterfree",
+        "from_total": 205,
+        "to_total": 395,
+        "gain_pct": 92.7
+      },
+      {
+        "from": "Zubat",
+        "to": "Golbat",
+        "from_total": 245,
+        "to_total": 455,
+        "gain_pct": 85.7
+      },
+      {
+        "from": "Shellder",
+        "to": "Cloyster",
+        "from_total": 305,
+        "to_total": 525,
+        "gain_pct": 72.1
+      }
+    ],
+    "smallest_gains": [
+      {
+        "from": "Haunter",
+        "to": "Gengar",
+        "from_total": 405,
+        "to_total": 500,
+        "gain_pct": 23.5
+      },
+      {
+        "from": "Oddish",
+        "to": "Gloom",
+        "from_total": 320,
+        "to_total": 395,
+        "gain_pct": 23.4
+      },
+      {
+        "from": "Ponyta",
+        "to": "Rapidash",
+        "from_total": 410,
+        "to_total": 500,
+        "gain_pct": 22.0
+      },
+      {
+        "from": "Weedle",
+        "to": "Kakuna",
+        "from_total": 195,
+        "to_total": 205,
+        "gain_pct": 5.1
+      },
+      {
+        "from": "Caterpie",
+        "to": "Metapod",
+        "from_total": 195,
+        "to_total": 205,
+        "gain_pct": 5.1
+      }
+    ],
+    "median_gain_pct_by_stat": {
+      "sp_def": 46.2,
+      "hp": 45.0,
+      "sp_atk": 42.9,
+      "attack": 40.1,
+      "defense": 37.5,
+      "speed": 35.1
+    }
+  },
+  "appendix_multiple_testing": {
+    "Q1 rarity vs strength": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q2 weight vs strength": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q2 height vs strength": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q2 weight vs strength, stage 1": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q2 weight vs strength, stage 2": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q2 weight vs strength, stage 3": {
+      "p": 0.0017,
+      "p_adjusted_BH": 0.00187
+    },
+    "Q3 speed vs toughness": {
+      "p": 0.05929,
+      "p_adjusted_BH": 0.05929
+    },
+    "Q3 speed vs toughness, fully evolved": {
+      "p": 0.0016,
+      "p_adjusted_BH": 0.00187
+    },
+    "Q3 speed vs toughness, not fully evolved": {
+      "p": 0.0004,
+      "p_adjusted_BH": 0.00055
+    },
+    "Q4 colour vs type": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    },
+    "Q5 evolution gain": {
+      "p": 0.0001,
+      "p_adjusted_BH": 0.00016
+    }
+  },
+  "model": {
+    "clues": [
+      "Size",
+      "Colour",
+      "Rarity (catch rate)",
+      "Evolution stage",
+      "Legendary"
+    ],
+    "target": "strength (total of six battle stats)",
+    "testing": "leave-one-out: each Pokémon guessed by a model that never saw it",
+    "scores": {
+      "Guess the average (baseline)": {
+        "typical_error_points": 86.2,
+        "r2": -0.013
+      },
+      "Straight-line model (ridge)": {
+        "typical_error_points": 32.1,
+        "r2": 0.799
+      },
+      "Random forest": {
+        "typical_error_points": 31.5,
+        "r2": 0.789
+      }
+    },
+    "best_model": "Random forest",
+    "beats_baseline": true,
+    "error_reduction_vs_baseline_pct": 63.5,
+    "importance": [
+      {
+        "clue": "Evolution stage",
+        "extra_error_points": 43.0,
+        "sd": 11.4
+      },
+      {
+        "clue": "Size",
+        "extra_error_points": 10.8,
+        "sd": 4.7
+      },
+      {
+        "clue": "Rarity (catch rate)",
+        "extra_error_points": 3.7,
+        "sd": 2.5
+      },
+      {
+        "clue": "Legendary",
+        "extra_error_points": 1.9,
+        "sd": 1.7
+      },
+      {
+        "clue": "Colour",
+        "extra_error_points": -0.1,
+        "sd": 0.9
+      }
+    ],
+    "stronger_than_it_looks": [
+      {
+        "name": "Mew",
+        "total": 600,
+        "ai_guess": 411,
+        "miss": 189
+      },
+      {
+        "name": "Mewtwo",
+        "total": 680,
+        "ai_guess": 569,
+        "miss": 111
+      },
+      {
+        "name": "Ponyta",
+        "total": 410,
+        "ai_guess": 316,
+        "miss": 94
+      },
+      {
+        "name": "Jolteon",
+        "total": 525,
+        "ai_guess": 438,
+        "miss": 87
+      },
+      {
+        "name": "Gloom",
+        "total": 395,
+        "ai_guess": 309,
+        "miss": 86
+      }
+    ],
+    "weaker_than_it_looks": [
+      {
+        "name": "Onix",
+        "total": 385,
+        "ai_guess": 549,
+        "miss": -164
+      },
+      {
+        "name": "Ditto",
+        "total": 288,
+        "ai_guess": 445,
+        "miss": -157
+      },
+      {
+        "name": "Kakuna",
+        "total": 205,
+        "ai_guess": 340,
+        "miss": -135
+      },
+      {
+        "name": "Metapod",
+        "total": 205,
+        "ai_guess": 339,
+        "miss": -134
+      },
+      {
+        "name": "Farfetch'd",
+        "total": 352,
+        "ai_guess": 470,
+        "miss": -118
+      }
+    ]
+  }
+}

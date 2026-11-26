@@ -1,0 +1,14 @@
+# Python
+.venv/
+__pycache__/
+
+# macOS
+.DS_Store
+
+# Inputs that are not ours to redistribute (download them, see README)
+data/raw/PokemonData.csv
+*.zip
+assets/fonts/
+
+# LinkedIn article files and Word draft (generated locally by scripts/make_linkedin_*.py)
+linkedin/

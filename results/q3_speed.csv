@@ -1,0 +1,152 @@
+num,name,speed,toughness,total,fully_evolved,highlight
+1,Bulbasaur,45,159,318,False,
+2,Ivysaur,60,203,405,False,
+3,Venusaur,80,263,525,True,
+4,Charmander,65,132,309,False,
+5,Charmeleon,80,181,405,False,
+6,Charizard,100,241,534,True,fast and tough
+7,Squirtle,43,173,314,False,
+8,Wartortle,58,219,405,False,
+9,Blastoise,78,284,530,True,
+10,Caterpie,45,100,195,False,slow and fragile
+11,Metapod,30,130,205,False,slow and fragile
+12,Butterfree,70,190,395,True,
+13,Weedle,50,90,195,False,
+14,Kakuna,35,120,205,False,slow and fragile
+15,Beedrill,75,185,395,True,
+16,Pidgey,56,115,251,False,
+17,Pidgeotto,71,168,349,False,
+18,Pidgeot,101,228,479,True,
+19,Rattata,72,100,253,False,
+20,Raticate,97,185,413,True,
+21,Spearow,70,101,262,False,
+22,Fearow,100,191,442,True,
+23,Ekans,55,133,288,False,
+24,Arbok,80,208,438,True,
+25,Pikachu,90,125,320,False,fast but fragile
+26,Raichu,110,195,485,True,
+27,Sandshrew,40,165,300,False,
+28,Sandslash,65,240,450,True,
+29,Nidoran♀,41,147,275,False,slow and fragile
+30,Nidorina,56,192,365,False,
+31,Nidoqueen,76,262,505,True,
+32,Nidoran♂,50,126,273,False,
+33,Nidorino,65,173,365,False,
+34,Nidoking,85,233,505,True,
+35,Clefairy,35,183,323,False,
+36,Clefable,60,258,483,True,
+37,Vulpix,65,143,299,False,
+38,Ninetales,100,248,505,True,fast and tough
+39,Jigglypuff,20,160,270,False,
+40,Wigglytuff,45,235,435,True,
+41,Zubat,55,115,245,False,
+42,Golbat,90,220,455,True,
+43,Oddish,30,165,320,False,
+44,Gloom,40,205,395,False,
+45,Vileplume,50,250,490,True,
+46,Paras,25,145,285,False,slow and fragile
+47,Parasect,30,220,405,True,
+48,Venonat,45,165,305,False,
+49,Venomoth,90,205,450,True,
+50,Diglett,95,80,265,False,fast but fragile
+51,Dugtrio,120,155,405,True,fast but fragile
+52,Meowth,90,115,290,False,fast but fragile
+53,Persian,115,190,440,True,
+54,Psyduck,55,148,320,False,
+55,Golduck,85,238,500,True,
+56,Mankey,70,120,305,False,
+57,Primeape,95,195,455,True,
+58,Growlithe,60,150,350,False,
+59,Arcanine,95,250,555,True,fast and tough
+60,Poliwag,90,120,300,False,fast but fragile
+61,Poliwhirl,90,180,385,False,
+62,Poliwrath,70,275,510,True,
+63,Abra,90,95,310,False,fast but fragile
+64,Kadabra,105,140,400,False,fast but fragile
+65,Alakazam,120,195,500,True,
+66,Machop,35,155,305,False,slow and fragile
+67,Machoke,45,210,405,False,
+68,Machamp,55,255,505,True,
+69,Bellsprout,40,115,300,False,slow and fragile
+70,Weepinbell,55,160,390,False,
+71,Victreebel,70,215,490,True,
+72,Tentacool,70,175,335,False,
+73,Tentacruel,100,265,515,True,fast and tough
+74,Geodude,20,170,300,False,
+75,Graveler,35,215,390,False,
+76,Golem,45,275,495,True,slow but tough
+77,Ponyta,90,170,410,False,
+78,Rapidash,105,215,500,True,
+79,Slowpoke,15,195,315,False,
+80,Slowbro,30,285,490,True,slow but tough
+81,Magnemite,45,150,325,False,slow and fragile
+82,Magneton,70,215,465,True,
+83,Farfetch'd,60,169,352,True,
+84,Doduo,75,115,310,False,
+85,Dodrio,100,190,460,True,
+86,Seel,45,190,325,False,
+87,Dewgong,70,265,475,True,
+88,Grimer,25,180,325,False,
+89,Muk,50,280,500,True,
+90,Shellder,40,155,305,False,slow and fragile
+91,Cloyster,70,275,525,True,
+92,Gastly,80,95,310,False,
+93,Haunter,95,145,405,False,fast but fragile
+94,Gengar,110,195,500,True,
+95,Onix,70,240,385,True,
+96,Drowzee,42,195,328,False,
+97,Hypno,67,270,483,True,
+98,Krabby,50,145,325,False,
+99,Kingler,75,220,475,True,
+100,Voltorb,100,145,330,False,fast but fragile
+101,Electrode,140,210,480,True,
+102,Exeggcute,40,185,325,False,
+103,Exeggutor,55,245,520,True,
+104,Cubone,35,195,320,False,
+105,Marowak,45,250,425,True,slow but tough
+106,Hitmonlee,87,213,455,True,
+107,Hitmonchan,76,239,455,True,
+108,Lickitung,30,240,385,True,slow but tough
+109,Koffing,35,180,340,False,
+110,Weezing,60,255,490,True,
+111,Rhyhorn,25,205,345,False,
+112,Rhydon,40,270,485,True,slow but tough
+113,Chansey,50,360,450,True,
+114,Tangela,60,220,435,True,
+115,Kangaskhan,90,265,490,True,fast and tough
+116,Horsea,60,125,295,False,
+117,Seadra,85,195,440,True,
+118,Goldeen,63,155,320,False,
+119,Seaking,68,225,450,True,
+120,Staryu,85,140,340,False,
+121,Starmie,115,230,520,True,
+122,Mr. Mime,90,225,460,True,
+123,Scyther,105,230,500,True,
+124,Jynx,95,195,455,True,
+125,Electabuzz,105,207,490,True,
+126,Magmar,93,207,495,True,
+127,Pinsir,85,235,500,True,
+128,Tauros,110,240,490,True,fast and tough
+129,Magikarp,80,95,200,False,
+130,Gyarados,81,274,540,True,
+131,Lapras,60,305,535,True,
+132,Ditto,48,144,288,True,
+133,Eevee,55,170,325,False,
+134,Vaporeon,65,285,525,True,
+135,Jolteon,130,220,525,True,
+136,Flareon,65,235,525,True,
+137,Porygon,40,210,395,True,
+138,Omanyte,35,190,355,False,
+139,Omastar,55,265,495,True,
+140,Kabuto,55,165,355,False,
+141,Kabutops,80,235,495,True,
+142,Aerodactyl,130,220,515,True,
+143,Snorlax,30,335,540,True,slow but tough
+144,Articuno,85,315,580,True,
+145,Zapdos,100,265,580,True,fast and tough
+146,Moltres,90,265,580,True,fast and tough
+147,Dratini,50,136,300,False,
+148,Dragonair,70,196,420,False,
+149,Dragonite,80,286,600,True,
+150,Mewtwo,130,286,680,True,fast and tough
+151,Mew,100,300,600,True,fast and tough

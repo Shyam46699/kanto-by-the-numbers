@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kanto by the Numbers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a classic printed feature. A centred masthead between fine rules, Garamond for headings and
+   text, small capitals for labels, and charts set like plates with a quiet Franklin Gothic for figures. */
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --raised: #ffffff;
+  --ink: #161514;
+  --ink-2: #4a4844;
+  --muted: #858379;
+  --grid: #e3e2dc;
+  --axis: #c3c2b7;
+  --hair: rgba(17, 17, 17, .12);
+  --accent: #9b1c1c;          /* deep Pokédex red, used sparingly */
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a;   /* validated categorical slots 1-3 */
+  --dot: #c9c8c1;
+  --seq1: #e9f1e5; --seq2: #cbdfc1; --seq3: #9fc292; --seq4: #5f9354; --seq5: #2f5e2a;   /* muted green ramp, Q4 grid */
+  --seqt-lo: #111111; --seqt-hi: #ffffff;
+  --f-display: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  --f-body: "EB Garamond", Garamond, "Iowan Old Style", Georgia, serif;
+  --f-ui: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --step--1: .8125rem; --step-0: 1.25rem; --step-1: 1.45rem; --step-2: clamp(1.85rem, 3.6vw, 2.4rem); --step-3: clamp(2.9rem, 7vw, 4.9rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #191817; --surface: #191817; --raised: #242321; --ink: #eeece7; --ink-2: #c2bfb6; --muted: #8f8c83;
+    --grid: #2c2c2a; --axis: #45443f; --hair: rgba(255, 255, 255, .12);
+    --accent: #e0675c;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --dot: #4a4a46;
+    --seq1: #1d2a1b; --seq2: #2f4a2b; --seq3: #3f6b38; --seq4: #6fa363; --seq5: #a9cf9c;
+    --seqt-lo: #f0efec; --seqt-hi: #0b0b0b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #191817; --surface: #191817; --raised: #242321; --ink: #eeece7; --ink-2: #c2bfb6; --muted: #8f8c83;
+  --grid: #2c2c2a; --axis: #45443f; --hair: rgba(255, 255, 255, .12);
+  --accent: #e0675c;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --dot: #4a4a46;
+  --seq1: #1d2a1b; --seq2: #2f4a2b; --seq3: #3f6b38; --seq4: #6fa363; --seq5: #a9cf9c;
+  --seqt-lo: #f0efec; --seqt-hi: #0b0b0b;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: var(--step-0); line-height: 1.55;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 4rem;
+}
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: 1000px; margin-inline: auto; }
+.col { max-width: 66ch; margin-inline: auto; }
+.col > * + * { margin-top: 1.05rem; }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; font-weight: 500; font-variant-numeric: lining-nums; }
+.eyebrow { font-family: var(--f-body); font-size: 1.05rem; font-variant-caps: all-small-caps; letter-spacing: .09em; color: var(--accent); }
+.dex { font-family: var(--f-ui); color: var(--muted); font-size: .85em; font-variant-numeric: tabular-nums; }
+
+/* Masthead */
+.hero { padding-block: 3.25rem 1.5rem; display: grid; gap: 1rem; }
+.hero .col { width: 100%; text-align: center; border-top: 3px double var(--ink); border-bottom: 1px solid var(--ink); padding-block: 1.75rem 1.5rem; }
+.hero h1 { font-size: var(--step-3); line-height: 1; font-weight: 500; letter-spacing: -.01em; }
+.dek { font-size: 1.5rem; line-height: 1.35; font-style: italic; color: var(--ink-2); max-width: 40ch; margin-inline: auto; }
+.hero h1 .red { color: var(--accent); }
+h2 .qn { color: var(--accent); }   /* Q1–Q6 labels in the accent red */
+
+.wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 0; margin-top: 1.25rem; }
+.wall .tile { aspect-ratio: 1; display: grid; place-items: center; cursor: default; }
+.wall .tile:hover, .wall .tile:focus-visible { background: var(--grid); }
+.wall-cap { font-family: var(--f-ui); font-size: var(--step--1); color: var(--muted); margin-top: .5rem; }
+
+.sprite { background-image: url("sprites.webp"); background-repeat: no-repeat; flex: none; }
+
+/* Sections */
+section { padding-block: 3.75rem 0; }
+.qhead { display: grid; gap: .45rem; }
+.qhead h2, section > .col > h2 { font-size: var(--step-2); line-height: 1.12; font-weight: 500; }
+.lede::first-letter { float: left; font-size: 3.4em; line-height: .82; padding: .08em .08em 0 0; color: var(--accent); font-weight: 500; }
+#intro { padding-top: 2.25rem; }
+.col.after { margin-top: 1.75rem; }
+.figcap { font-family: var(--f-body); font-style: italic; font-size: 1rem; color: var(--ink-2); margin-top: .6rem; }
+
+.plate { margin-top: 2.25rem; border-top: 1px solid var(--ink); padding-top: .8rem; font-family: var(--f-ui); font-variant-numeric: lining-nums; }
+.plate-top { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: flex-start; justify-content: space-between; margin-bottom: .6rem; }
+.legend { display: flex; flex-wrap: wrap; gap: .25rem 1rem; font-size: .8rem; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.chart { position: relative; width: 100%; }
+.chart > svg { display: block; overflow: visible; }
+.chart text { font-family: var(--f-ui); }
+.readout { font-size: .85rem; color: var(--ink-2); margin-top: .35rem; min-height: 1.3em; }
+.readout b { color: var(--ink); font-weight: 600; }
+
+.seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 3px; padding: 2px; gap: 2px; flex-wrap: wrap; }
+.seg button { font: 600 .8rem var(--f-ui); color: var(--ink-2); background: none; border: 0; border-radius: 2px; padding: .35rem .7rem; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg button:hover:not([aria-pressed="true"]) { background: var(--grid); }
+
+details.table { margin-top: .75rem; font-size: .85rem; }
+details.table summary { cursor: pointer; color: var(--ink-2); width: fit-content; }
+.tscroll { max-height: 320px; overflow: auto; margin-top: .5rem; border-top: 1px solid var(--axis); border-bottom: 1px solid var(--axis); }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-family: var(--f-ui); }
+th, td { text-align: left; padding: .35rem .6rem; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--bg); font-weight: 600; }
+td.num, th.num { text-align: right; }
+
+/* Tooltip */
+#tip { position: fixed; z-index: 20; pointer-events: none; background: var(--raised); color: var(--ink);
+       border: 1px solid var(--hair); border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,.14);
+       padding: .6rem .75rem; font: .8rem/1.35 var(--f-ui); display: flex; gap: .6rem; align-items: center; max-width: 260px; }
+#tip .tname { font-weight: 700; font-size: .85rem; }
+#tip .row { display: flex; justify-content: space-between; gap: 1rem; color: var(--ink-2); }
+#tip .row b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.shuffle-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; font-family: var(--f-ui); }
+.shuffle-steps figure { margin: 0; display: grid; gap: .35rem; align-content: start; }
+.shuffle-steps figcaption { font-size: .8rem; color: var(--ink-2); }
+.shuffle-steps svg { width: 100%; height: auto; color: var(--ink); font-family: var(--f-ui); }
+
+/* Rule-breakers, figures, bars */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0 1.5rem; margin-top: .5rem; }
+.card { display: flex; gap: .6rem; align-items: center; border-bottom: 1px solid var(--grid); padding: .5rem 0; font-size: .85rem; min-width: 0; }
+.card b { display: block; font-size: .9rem; }
+.card span { color: var(--ink-2); }
+.cards { font-family: var(--f-ui); }
+.col .cards { grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 0 1rem; }
+.rawscroll { overflow-x: auto; border-top: 1px solid var(--axis); border-bottom: 1px solid var(--axis); max-height: 420px; overflow-y: auto; }
+.raw { margin: 0; padding: .75rem .25rem; font: .78rem/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; color: var(--ink); white-space: pre; font-variant-numeric: tabular-nums; }
+.refs { padding-left: 1.4rem; margin: .5rem 0 0; display: grid; gap: .4rem; }
+
+.bars { display: grid; gap: .6rem; margin-top: .75rem; }
+.bar { display: grid; grid-template-columns: minmax(7.5rem, 11rem) 1fr; gap: .75rem; align-items: center; font-size: .85rem; }
+.bar .track { position: relative; height: 18px; }
+.bar .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--s1); border-radius: 0 4px 4px 0; min-width: 2px; }
+.bar .val { position: absolute; top: 50%; transform: translateY(-50%); padding-left: .4rem; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Q4 grid */
+.heat { display: grid; font-size: .78rem; min-width: 640px; }
+.heat .hd { color: var(--ink-2); text-align: center; padding: .25rem 0; writing-mode: vertical-rl; transform: rotate(180deg); justify-self: center; height: 4.6rem; }
+.heat .rowhd { display: flex; align-items: center; gap: .45rem; padding-right: .5rem; white-space: nowrap; }
+.heat .rowhd i { width: 12px; height: 12px; border-radius: 2px; border: 1px solid var(--hair); flex: none; }
+.heat .rowhd em { color: var(--muted); font-style: normal; }
+.heat .cell { margin: 1px; border-radius: 2px; display: grid; place-items: center; min-height: 26px; font-variant-numeric: tabular-nums; }
+.heat .cell.top { box-shadow: 0 0 0 2px var(--ink); }
+.hscroll { overflow-x: auto; padding-bottom: .25rem; }
+.scale { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; font-size: .78rem; color: var(--ink-2); }
+.scale i { width: 22px; height: 12px; border-radius: 2px; display: inline-block; }
+.scale .ol { width: 18px; height: 12px; border: 2px solid var(--ink); border-radius: 2px; display: inline-block; margin-left: .75rem; }
+.subhead { font-family: var(--f-body); font-weight: 600; font-size: 1.1rem; margin-top: 1.5rem; }
+
+/* Q5 dumbbells */
+.dumb { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) 3.5rem; column-gap: .75rem; align-items: center; font-size: .85rem; }
+.dumb .who { display: flex; align-items: center; gap: .25rem; min-width: 0; }
+.dumb .who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dumb .track { position: relative; height: 34px; }
+.dumb .track .line { position: absolute; top: 50%; height: 2px; background: var(--axis); transform: translateY(-50%); }
+.dumb .track .a, .dumb .track .b { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--bg); }
+.dumb .track .a { background: var(--dot); }
+.dumb .track .b { background: var(--s1); }
+.dumb .gain { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.dumb .gap { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: .35rem 0; }
+.dumb .axis { position: relative; height: 1.4rem; color: var(--muted); font-size: .75rem; font-variant-numeric: tabular-nums; }
+.dumb .axis span { position: absolute; transform: translateX(-50%); }
+.btn { font: 600 .85rem var(--f-ui); background: none; color: var(--ink); border: 1px solid var(--axis); border-radius: 3px; padding: .45rem .9rem; cursor: pointer; margin-top: .75rem; }
+.btn:hover { background: var(--grid); }
+
+.appendix { font-size: 1.1rem; }
+.appendix h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.75rem; }
+.appendix ul { padding-left: 1.2rem; margin: .5rem 0 0; display: grid; gap: .4rem; }
+.credits { color: var(--ink-2); font-family: var(--f-ui); font-size: .8rem; line-height: 1.5; border-top: 1px solid var(--grid); padding-top: 1rem; margin-top: 2rem; }
+
+@media (max-width: 560px) {
+  .dumb { grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr) 3rem; }
+  .bar { grid-template-columns: 7rem 1fr; }
+  .dek { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wall .tile { transition: background .15s; }
+}
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="col">
+    <h1>Kanto by the <span class="red">Numbers</span></h1>
+    <p class="dek">A statistical look at Gen 1 Pokémon</p>
+  </div>
+  <div>
+    <div class="wall" id="wall" aria-label="All 151 Gen 1 Pokémon"></div>
+    <p class="wall-cap">All 151 Gen 1 Pokémon in Pokédex order, in their original 1996 artwork.</p>
+  </div>
+</header>
+
+<section id="intro" aria-label="Introduction">
+  <div class="col">
+    <p class="lede">Anyone who grew up with the Game Boy games or the anime subconsciously picked up a few rules about Pokémon. For example, Mewtwo, the rarest Pokémon of all, was also the most feared, so rarity seemed to go hand in hand with power. Brock's Onix towered over Pikachu in Ash's first gym battle, which made size look like strength. Squirtle made blue look like the colour of Water types, and every evolution seemed to make a Pokémon better.</p>
+    <p>I was curious whether these rules hold up with statistical significance or are simply impressions. Gen 1, the 151 Pokémon of the Kanto region, is well suited to the question, because each one has an official height, weight and colour, a catch rate hidden in the game's code, and six battle stats. The data come from PokéAPI and two public Kaggle datasets (listed at the end), and the analysis was done in Python.</p>
+    <p>The battle stats are the numbers the games use to decide a battle. HP is how much damage a Pokémon can take before it faints. Attack and Defence govern physical moves such as Tackle, while Special Attack and Special Defence cover special moves such as Thunderbolt. Speed decides who moves first. Added together, the six give a Pokémon's base stat total, which this page uses as its overall <b>strength</b>.</p>
+    <p>The first five questions below each test one of those rules, and the sixth asks whether a machine learning model can predict a Pokémon's strength without seeing any of its battle stats.</p>
+  </div>
+</section>
+
+<section id="q1" aria-labelledby="q1-h">
+  <div class="col">
+    <h2 id="q1-h"><span class="qn">Q1</span>: Are rarer Pokémon stronger?</h2>
+    <p>Every Pokémon has a catch rate, from 255 (a Poké Ball almost always works) down to 3. Only four Pokémon sit at 3, and all of them are legendary (Mewtwo, Articuno, Zapdos and Moltres). If rarity reflects power, the harder a Pokémon is to catch, the stronger it should be.</p>
+    <p>The standard way to measure whether two things move together is a <b>correlation</b>, a score from −1 to +1. A value near +1 means that as one rises, so does the other; a value near 0 means there is no pattern; and a value near −1 means that as one rises, the other falls. This page uses <b>Spearman's rank correlation</b>, written ρ (rho) and calculated with the SciPy library. It ranks the Pokémon from lowest to highest on each measure and compares the two rankings, which stops a few extremes such as Mewtwo from dominating the result.</p>
+    <p>Between rarity and strength, ρ = 0.73, a strong positive link (Fig. 1). Mewtwo is both the hardest Pokémon to catch and the strongest of all 151.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="legend"><span><i style="background:var(--s1)"></i>Legendary or mythical</span><span><i style="background:var(--s3)"></i>Best value for its catch rate</span><span><i style="background:var(--s2)"></i>Worst value for its catch rate</span><span><i style="background:var(--dot)"></i>Everyone else</span></div>
+    </div>
+    <div class="chart" id="c-q1"></div>
+    <p class="figcap">Fig. 1. Catch rate and strength</p>
+    <details class="table"><summary>See the data as a table</summary><div class="tscroll" id="t-q1"></div></details>
+  </div>
+  <div class="col after">
+    <p>With only 151 Pokémon, a pattern can appear by chance, so every result on this page was also checked with a <b>permutation test</b>, written in Python with the NumPy library. The test shuffles one of the two columns at random, which breaks any real connection, and recalculates the correlation. Repeated 10,000 times, this shows the range of results that chance alone can produce. If the real result lies far outside that range, chance is an unlikely explanation. For rarity and strength, none of the 10,000 shuffles came close, and the shuffled correlations never exceeded 0.33, against a real value of 0.73 (Fig. 2).</p>
+  </div>
+  <div class="plate">
+    <div class="shuffle-steps" id="shuffle"></div>
+    <p class="figcap">Fig. 2. Permutation test for catch rate and strength</p>
+  </div>
+  <div class="col after">
+    <p>Comparing each Pokémon's rank for strength with its rank for rarity identifies those that are better or worse value than their catch rate suggests (green and orange in Fig. 1). The three starters, Bulbasaur, Charmander and Squirtle, are among the worst value. They share a catch rate of 45 with many fully evolved Pokémon, yet they are far weaker, which rarely matters because Professor Oak hands one over for free. Their low catch rate is likely explained by what they evolve into. Their evolved forms, Venusaur, Charizard and Blastoise, rank 11th to 13th in strength among all 151. Likewise, Dratini, another poor-value Pokémon, grows into Dragonite, joint second at 600 points. In other words, the catch rate appears to reflect the strength of the whole evolution line rather than that of the Pokémon itself. At the other end, Arcanine, Ninetales, Cloyster, Muk and Golduck are relatively easy to catch but reach 500 points of strength or more.</p>
+  </div>
+</section>
+
+<section id="q2" aria-labelledby="q2-h">
+  <div class="col">
+    <h2 id="q2-h"><span class="qn">Q2</span>: Does size equal power?</h2>
+    <p>Heavier Pokémon are stronger, and so are taller ones, with ρ = 0.72 for both. However, evolution could explain this, because evolving makes a Pokémon bigger and stronger at the same time, so size and strength might be linked only because both increase with evolution.</p>
+    <p>To test this, each evolution stage was analysed separately (Fig. 3). The link remains within every stage, with ρ = 0.71 for first-stage Pokémon, 0.52 for second-stage and 0.73 for third-stage. So the link between size and strength is not just a side effect of evolution.</p>
+    <p>Fig. 3 plots weight on a logarithmic (log) scale, where each step along the axis is ten times heavier than the last. Gen 1 weights range from 0.1 kg (Gastly) to 460 kg (Snorlax), but 135 of the 151 Pokémon weigh less than 100 kg. On an ordinary scale, the few very heavy Pokémon, such as Snorlax, would stretch the axis and squeeze almost every other Pokémon into one corner of the chart.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="legend"><span><i style="background:var(--s1)"></i>First stage</span><span><i style="background:var(--s2)"></i>Second stage</span><span><i style="background:var(--s3)"></i>Third stage</span></div>
+      <div class="seg" role="group" aria-label="Show evolution stage" id="seg-q2">
+        <button type="button" data-v="0" aria-pressed="true">All</button><button type="button" data-v="1" aria-pressed="false">First stage</button><button type="button" data-v="2" aria-pressed="false">Second stage</button><button type="button" data-v="3" aria-pressed="false">Third stage</button>
+      </div>
+    </div>
+    <div class="chart" id="c-q2"></div>
+    <p class="readout" id="r-q2"></p>
+    <p class="figcap">Fig. 3. Weight and strength by evolution stage</p>
+    <details class="table"><summary>See the data as a table</summary><div class="tscroll" id="t-q2"></div></details>
+  </div>
+  <div class="col after">
+    <p>Brock's Onix is the clearest exception. At 8.8 metres it is the tallest Pokémon in Gen 1, and at 210 kg one of the heaviest, yet its strength of 385 is lower than that of many Pokémon a fraction of its size.</p>
+  </div>
+</section>
+
+<section id="q3" aria-labelledby="q3-h">
+  <div class="col">
+    <h2 id="q3-h"><span class="qn">Q3</span>: Can a Pokémon be both fast and tough?</h2>
+    <p>Toughness here means how much damage a Pokémon can absorb, measured as HP plus Defence plus Special Defence. Across all 151 Pokémon, the correlation between speed and toughness is only ρ = 0.16, and the permutation test cannot rule out chance (Fig. 4).</p>
+    <p>Within each evolution group, however, faster Pokémon tend to be less tough, a trade-off between speed and toughness. This holds for the 70 Pokémon that are not yet fully evolved (ρ = −0.41) and for the 81 fully evolved Pokémon (ρ = −0.36), and both results pass the permutation test. Snorlax is slow and very tough, Alakazam is fast and fragile, and Mewtwo is the main exception, being both fast and tough.</p>
+
+<p>The trade-off disappears when the two groups are combined because fully evolved Pokémon are faster and tougher overall, with a median speed of 80 against 55 and a median toughness of 235 against 155. On one chart, the fully evolved group sits above and to the right of the other (first panel of Fig. 4), so speed and toughness appear to rise together and the trade-off within each group is hidden, an effect known as <b>Simpson's paradox</b>.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="legend"><span><i style="background:var(--s2)"></i>Not yet fully evolved</span><span><i style="background:var(--s1)"></i>Fully evolved</span></div>
+      <div class="seg" role="group" aria-label="Which Pokémon to show" id="seg-q3">
+        <button type="button" data-v="all" aria-pressed="true">All 151</button><button type="button" data-v="young" aria-pressed="false">Not yet fully evolved</button><button type="button" data-v="final" aria-pressed="false">Fully evolved</button>
+      </div>
+    </div>
+    <div class="chart" id="c-q3"></div>
+    <p class="readout" id="r-q3"></p>
+    <p class="figcap">Fig. 4. Speed and toughness, all Pokémon and by evolution group</p>
+    <details class="table"><summary>See the data as a table</summary><div class="tscroll" id="t-q3"></div></details>
+  </div>
+</section>
+
+<section id="q4" aria-labelledby="q4-h">
+  <div class="col">
+    <h2 id="q4-h"><span class="qn">Q4</span>: Does colour give away the type?</h2>
+    <p>The Pokédex, the gadget every young fan wanted, myself included, assigns each Pokémon one official colour. Colour and type are clearly linked. In a permutation test that shuffled the colours 10,000 times, no shuffle produced a link as strong as the real one.</p>
+    <p>Green Pokémon are seven times more likely than average to be Grass types (Fig. 5). Pink Pokémon lean towards Psychic and Normal, yellow towards Electric and red towards Fire. The rule about blue also holds, with 16 of the 25 blue Pokémon being Water types.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="scale" aria-hidden="true">Share of the colour with each type: low <i style="background:var(--seq1)"></i><i style="background:var(--seq2)"></i><i style="background:var(--seq3)"></i><i style="background:var(--seq4)"></i><i style="background:var(--seq5)"></i> high <b class="ol"></b> strongest links</div>
+    </div>
+    <div class="hscroll"><div class="heat" id="c-q4" role="table" aria-label="Colour by type grid"></div></div>
+    <p class="figcap">Fig. 5. Pokédex colour and type (original 1996 types)</p>
+  </div>
+  <div class="col after">
+    <p>Colour does not determine type, however. Misty's Psyduck is yellow but a Water type, and its evolution, Golduck, is blue. Magikarp is red but a Water type, Voltorb is red but an Electric type, and most red Pokémon are not Fire types at all.</p>
+  </div>
+</section>
+
+<section id="q5" aria-labelledby="q5-h">
+  <div class="col">
+    <h2 id="q5-h"><span class="qn">Q5</span>: How much stronger does evolving make a Pokémon?</h2>
+    <p>Gen 1 contains 72 evolutions, and every one of them makes the Pokémon stronger. The typical (median) evolution adds 140 points of strength, roughly 42%.</p>
+    <p>Magikarp to Gyarados is the largest gain by far, at 170% (Fig. 6). At the other extreme, Caterpie to Metapod is the smallest, at 5%, for a Pokémon that spends its whole life as a cocoon. Across all 72 evolutions, Special Defence and HP grow the most and Speed the least.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="legend"><span><i style="background:var(--dot)"></i>Before evolving</span><span><i style="background:var(--s1)"></i>After evolving</span></div>
+    </div>
+    <div id="c-q5"></div>
+    <button class="btn" type="button" id="q5-more" aria-expanded="false">Show all 72 evolutions</button>
+    <p class="figcap">Fig. 6. Strength before and after evolving</p>
+  </div>
+  <div class="col after">
+    <p>The first season of the anime, <i>Indigo League</i> (first aired in Japan from 1997 to 1999), offers several examples. Team Rocket learned about that 170% the hard way. Aboard the St. Anne, James spent the team's money on a Magikarp from a salesman who promised it would breed a fortune. It proved useless until, in the very next episode, it evolved into a Gyarados, learned Dragon Rage and left him.</p>
+    <p>The same season offers two more test cases. When Ash's Charmeleon evolved into Charizard during the battle with Aerodactyl, it gained 32% in strength, along with a habit of ignoring Ash's orders. Ash's Pikachu, on the other hand, refused to evolve. A Raichu is 52% stronger, yet Pikachu still beat Lt. Surge's Raichu in their rematch by relying on speed rather than power.</p>
+  </div>
+</section>
+
+<section id="ai" aria-labelledby="ai-h">
+  <div class="col">
+    <h2 id="ai-h"><span class="qn">Q6</span>: Can a machine learning model predict a Pokémon's strength?</h2>
+    <p>The questions so far examined one relationship at a time. The last question combines them, asking whether a model can use everything that is visible without a battle to predict how strong a Pokémon is.</p>
+    <p>The model was given seven <b>features</b>, the inputs it learns from. These were height, weight, colour, catch rate, evolution stage, whether the Pokémon is fully evolved, and whether it is legendary or mythical. It never saw any of the six battle stats, because their total is the <b>target</b>, the value it had to predict. Fig. 7 shows the table exactly as the model received it. Before training, height and weight were converted to a log scale, as in Fig. 3, and colour was <b>one-hot encoded</b> into ten 0/1 columns so the model could use it as numbers. Fully evolved and legendary are coded as 1 for yes and 0 for no.</p>
+  </div>
+  <div class="plate">
+    <div class="rawscroll"><pre class="raw" id="c-raw" tabindex="0" aria-label="The model's input table"></pre></div>
+    <button class="btn" type="button" id="raw-more" aria-expanded="false">Show all 151 rows</button>
+    <p class="figcap">Fig. 7. The model's input table</p>
+  </div>
+  <div class="col after">
+    <p>The model is a <b>random forest</b>, a <b>bagged ensemble</b> of 500 <b>decision trees</b> built with the scikit-learn library. Each tree learns a sequence of yes-or-no splits, such as “Is it fully evolved?” or “Does it weigh more than 50 kg?”, from its own <b>bootstrap sample</b> of the data, and the forest averages the 500 predictions.</p>
+    <p>A model must be tested on Pokémon it has not seen, otherwise it can simply memorise the answers. The model was therefore evaluated with <b>leave-one-out cross-validation</b>. It was trained on 150 Pokémon and asked to predict the one left out, and this was repeated until every Pokémon had been predicted once.</p>
+    <p>Accuracy is reported as the <b>mean absolute error</b>, the average distance between the predicted and the true strength. The random forest's mean absolute error is <span id="v-ai">32</span> points (Fig. 8). For comparison, a <b>baseline</b> that predicts the average strength for every Pokémon is off by <span id="v-base">86</span> points, so the model reduces the error by about 63%. A linear regression, which fits a single weighted sum of the features, performed almost identically. This suggests that with a dataset this small and relationships this simple, the more flexible random forest offers little extra.</p>
+  </div>
+  <div class="plate">
+    <div class="plate-top">
+      <div class="legend"><span><i style="background:var(--s1)"></i>Pokémon</span><span><i style="background:var(--s2)"></i>Largest errors</span></div>
+    </div>
+    <div class="chart" id="c-ai"></div>
+    <p class="figcap">Fig. 8. Predicted and real strength</p>
+    <details class="table"><summary>See the data as a table</summary><div class="tscroll" id="t-ai"></div></details>
+  </div>
+  <div class="col after">
+    <p>The largest errors come from Pokémon whose appearance is misleading. Onix is one of the heaviest Pokémon, so the model expected it to be strong. It is not. Ditto is hard to catch, so the model also expected more of it. Mew is the opposite case, small and light yet one of the strongest Pokémon in the game.</p>
+    <p>To see which features the model relied on, its <b>permutation feature importance</b> was measured by shuffling each feature in turn and recording how much the error increased (Fig. 9).</p>
+  </div>
+  <div class="plate">
+    <div class="bars" id="c-imp"></div>
+    <p class="figcap">Fig. 9. Feature importance (increase in mean absolute error when each feature is shuffled)</p>
+  </div>
+  <div class="col after">
+    <p>Evolution stage, including whether a Pokémon is fully evolved, matters most by far, followed by size. Colour adds nothing, which is consistent with Q4, since colour hints at type and type says little about strength. Catch rate appears unimportant, even though Q1 found a strong link with strength. The reason is that catch rate and evolution stage carry largely the same information, so once the model knows the stage, the catch rate adds little. More generally, feature importance shows what a model needs given the other features, not how much each feature matters on its own.</p>
+  </div>
+</section>
+
+<section id="summary" aria-labelledby="sum-h">
+  <div class="col">
+    <h2 id="sum-h">What Kanto tells us</h2>
+    <p>The data support most of these rules, but each has exceptions. First, rarity goes with strength, and the link is strong. However, catch rate does not reliably predict the strength of an individual Pokémon, as the weak but hard-to-catch starters show. Second, size is linked to strength at every stage of evolution, so the link is not just a side effect of evolution. Third, colour often hints at type, but many Pokémon break the pattern. Finally, evolution is the only rule without an exception, with all 72 evolutions increasing strength.</p>
+    <p>The result on speed and toughness was less expected. Faster Pokémon tend to be less tough both before and after they are fully evolved, yet the trade-off vanishes when all 151 are analysed together. This shows that a result for a whole dataset can hide a pattern within its groups, so the groups are worth checking.</p>
+    <p>Beyond the individual rules, the machine learning model combined these factors. Using only information available without a battle, it predicted strength to within about 32 points on average. The model relied most on evolution stage and size, the same factors identified by the individual questions. One caveat is that, with 151 Pokémon and only five legendary or mythical ones among them, the sample is small, so these findings describe Kanto rather than the whole Pokémon world.</p>
+  </div>
+</section>
+
+<section id="appendix" class="appendix" aria-labelledby="app-h">
+  <div class="col">
+    <h2 id="app-h">Methods and caveats</h2>
+    <h3>Data</h3>
+    <ul>
+      <li>The 151 Pokémon of Generation 1, with Mega Evolutions removed. Battle stats come from a Kaggle dataset. Height, weight, colour, catch rate and evolution links come from PokéAPI.</li>
+      <li>Types are the original 1996 types. Clefairy, Clefable, Jigglypuff, Wigglytuff and Mr. Mime were later changed to Fairy, and Magnemite and Magneton gained Steel. Here they keep their original types.</li>
+      <li>Strength is the base stat total, the sum of the six battle stats (HP, Attack, Defence, Special Attack, Special Defence, Speed), using the values from current games. The original games had a single Special stat.</li>
+      <li>Six Pokémon received small stat boosts in later games. This analysis uses the earlier values, which does not change any conclusion.</li>
+    </ul>
+    <h3>Statistics</h3>
+    <ul>
+      <li>Correlations are Spearman rank correlations (ρ), which handle uneven and skewed data such as catch rate and weight.</li>
+      <li>The ranges shown with each ρ are 95% confidence intervals from 10,000 bootstrap resamples.</li>
+      <li>Permutation tests use 10,000 random shuffles. In Q3, the trade-off holds within both evolution groups but not when they are pooled, an example of Simpson's paradox. Q4 measures the colour–type link with Cramér's V on primary types. Q5 uses a paired sign-flip permutation test on the 72 evolution pairs.</li>
+      <li>Because several tests were run, p-values were also adjusted with the Benjamini–Hochberg method. No conclusion changes after the adjustment.</li>
+      <li>151 Pokémon is a small sample. Some groups are tiny: there are only 3 Ghost types, 1 black Pokémon and 5 legendary or mythical Pokémon, so treat those details lightly.</li>
+    </ul>
+    <div class="tscroll" id="t-tests" style="max-height:none;margin-top:1rem"></div>
+    <h3>The machine learning model</h3>
+    <ul>
+      <li>A random forest regression model (500 decision trees, minimum two Pokémon per leaf, scikit-learn) predicted strength from log height, log weight, one-hot colour, catch rate, evolution stage, whether fully evolved, and legendary or mythical status.</li>
+      <li>Leave-one-out cross-validation means every one of the 151 predictions came from a model that never saw that Pokémon. A linear regression model (ridge regression) did almost exactly as well, with a mean absolute error of 32.1 points against 31.5.</li>
+      <li>Permutation feature importance shuffled one group of features at a time across 50 train-and-test splits (5-fold cross-validation, repeated 10 times).</li>
+    </ul>
+    <h3>References</h3>
+    <ol class="refs">
+      <li>PokéAPI, the RESTful Pokémon API. pokeapi.co. Source of height, weight, colour, catch rate, evolution chains and original types.</li>
+      <li>Pokémon stats dataset (Generations 1–7), Kaggle. Source of battle stats (the values used in current games) and legendary status.</li>
+      <li>Pokémon Generation One image dataset, Kaggle. Source of the original Red/Blue artwork.</li>
+      <li>Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. <i>Journal of Machine Learning Research</i>, 12, 2825–2830.</li>
+    </ol>
+    <p class="credits">Code and data: <a href="https://github.com/Shyam46699/kanto-by-the-numbers">github.com/Shyam46699/kanto-by-the-numbers</a>.<br>Pokémon and all character artwork are © Nintendo, Creatures Inc. and GAME FREAK. Artwork by Ken Sugimori. This is an unofficial fan project for learning and fun.</p>
+  </div>
+</section>
+
+</div>
+
+<div id="tip" hidden></div>
+
+<script type="module">
+const D = await fetch("data.json").then(r => r.json());
+const P = D.pokemon, R = D.results, S = D.sprites;
+const byNum = new Map(P.map(p => [p.n, p]));
+const byName = new Map(P.map(p => [p.name, p]));
+const NS = "http://www.w3.org/2000/svg";
+const css = v => `var(--${v})`;
+const fmt = (v, d = 0) => Number(v).toLocaleString("en", { maximumFractionDigits: d, minimumFractionDigits: d });
+const dex = n => "#" + String(n).padStart(3, "0");
+
+function svg(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.append(e);
+  return e;
+}
+function html(tag, attrs = {}, parent, text) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text != null) e.textContent = text;
+  if (parent) parent.append(e);
+  return e;
+}
+function spriteDiv(n, size) {
+  const d = document.createElement("div"), k = size / S.tile, i = n - 1;
+  d.className = "sprite";
+  d.style.width = d.style.height = size + "px";
+  d.style.backgroundSize = `${S.width * k}px ${S.height * k}px`;
+  d.style.backgroundPosition = `-${(i % S.cols) * S.tile * k}px -${Math.floor(i / S.cols) * S.tile * k}px`;
+  d.setAttribute("aria-hidden", "true");
+  return d;
+}
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById("tip");
+function showTip(p, rows, cx, cy) {
+  tip.replaceChildren();
+  tip.append(spriteDiv(p.n, 52));
+  const box = html("div", {}, tip);
+  const t = html("div", { class: "tname" }, box, p.name + " ");
+  html("span", { class: "dex" }, t, dex(p.n));
+  for (const [k, v] of rows) { const r = html("div", { class: "row" }, box); html("span", {}, r, k); html("b", {}, r, v); }
+  tip.hidden = false;
+  const w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = cx + 14, y = cy + 14;
+  if (x + w > innerWidth - 8) x = cx - w - 14;
+  if (y + h > innerHeight - 8) y = cy - h - 14;
+  tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
+}
+const hideTip = () => { tip.hidden = true; };
+
+/* ---------- scales ---------- */
+function linear(d0, d1, r0, r1) { const f = v => r0 + (v - d0) / (d1 - d0) * (r1 - r0); f.d = [d0, d1]; return f; }
+function logScale(d0, d1, r0, r1) { const a = Math.log10(d0), b = Math.log10(d1); return v => r0 + (Math.log10(v) - a) / (b - a) * (r1 - r0); }
+
+/* ---------- table builder ---------- */
+function table(host, cols, rows) {
+  const t = html("table", {}, host), tr = html("tr", {}, html("thead", {}, t));
+  for (const c of cols) html("th", c.num ? { class: "num" } : {}, tr, c.label);
+  const tb = html("tbody", {}, t);
+  for (const r of rows) { const row = html("tr", {}, tb); for (const c of cols) html("td", c.num ? { class: "num" } : {}, row, c.get(r)); }
+}
+
+/* ---------- generic scatter ---------- */
+function scatter(host, cfg) {
+  let state = {};
+  function render() {
+    const W = host.clientWidth, narrow = W < 520;
+    if (W < 120) return;
+    host.replaceChildren();
+    const H = Math.round(Math.min(470, Math.max(320, W * 0.6)));
+    const m = { l: narrow ? 50 : 56, r: 12, t: 14, b: 46 };
+    const s = svg("svg", { width: W, height: H, role: "img", "aria-label": cfg.aria }, host);
+    const X = cfg.x.log ? logScale(cfg.x.domain[0], cfg.x.domain[1], m.l, W - m.r) : linear(cfg.x.domain[0], cfg.x.domain[1], cfg.x.reverse ? W - m.r : m.l, cfg.x.reverse ? m.l : W - m.r);
+    const Y = linear(cfg.y.domain[0], cfg.y.domain[1], H - m.b, m.t);
+    // grid + ticks
+    for (const t of cfg.y.ticks) {
+      svg("line", { x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), stroke: css("grid"), "stroke-width": 1 }, s);
+      const tx = svg("text", { x: m.l - 8, y: Y(t) + 4, "text-anchor": "end", "font-size": 11, fill: css("muted") }, s); tx.textContent = fmt(t);
+    }
+    svg("line", { x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b, stroke: css("axis") }, s);
+    for (const t of (narrow && cfg.x.ticksNarrow) || cfg.x.ticks) {
+      const tx = svg("text", { x: X(t), y: H - m.b + 16, "text-anchor": "middle", "font-size": 11, fill: css("muted") }, s); tx.textContent = cfg.x.fmt ? cfg.x.fmt(t) : fmt(t);
+    }
+    const xl = svg("text", { x: (m.l + W - m.r) / 2, y: H - 6, "text-anchor": "middle", "font-size": 12, fill: css("ink-2") }, s); xl.textContent = cfg.x.label;
+    if (cfg.x.ends) {
+      const a = svg("text", { x: m.l, y: H - 6, "font-size": 11, fill: css("muted") }, s); a.textContent = cfg.x.ends[0];
+      const b = svg("text", { x: W - m.r, y: H - 6, "text-anchor": "end", "font-size": 11, fill: css("muted") }, s); b.textContent = cfg.x.ends[1];
+    }
+    const yl = svg("text", { transform: `translate(11 ${(m.t + H - m.b) / 2}) rotate(-90)`, "text-anchor": "middle", "font-size": 12, fill: css("ink-2") }, s); yl.textContent = cfg.y.label;
+    if (cfg.diag) {
+      const lo = Math.max(cfg.x.domain[0], cfg.y.domain[0]), hi = Math.min(cfg.x.domain[1], cfg.y.domain[1]);
+      svg("line", { x1: X(lo), y1: Y(lo), x2: X(hi), y2: Y(hi), stroke: css("axis"), "stroke-width": 1.5 }, s);
+      const t = svg("text", { x: X(hi) - 4, y: Y(hi) + 16, "text-anchor": "end", "font-size": 11, fill: css("muted") }, s); t.textContent = "perfect prediction";
+    }
+    if (cfg.corners) for (const c of cfg.corners) {
+      const t = svg("text", { x: c.x === "l" ? m.l + 6 : W - m.r - 6, y: c.y === "t" ? m.t + 14 : H - m.b - 8, "text-anchor": c.x === "l" ? "start" : "end", "font-size": 11, fill: css("muted"), "font-style": "italic" }, s); t.textContent = c.text;
+    }
+    // points: muted first, coloured on top
+    const pts = cfg.points.map(p => ({ p, x: X(cfg.x.get(p)) + (cfg.jitter ? cfg.jitter(p) : 0), y: Y(cfg.y.get(p)), c: cfg.color(p, state), v: cfg.visible ? cfg.visible(p, state) : true }));
+    pts.sort((a, b) => (a.c ? 1 : 0) - (b.c ? 1 : 0) || (a.v ? 1 : 0) - (b.v ? 1 : 0));
+    const g = svg("g", {}, s);
+    for (const q of pts) svg("circle", { cx: q.x, cy: q.y, r: 4.5, fill: q.c || css("dot"), stroke: css("surface"), "stroke-width": 2, opacity: q.v ? 1 : 0.15 }, g);
+    // callouts
+    const size = narrow ? 30 : 40;
+    for (const c of cfg.callouts || []) {
+      if (narrow && c.wideOnly) continue;
+      const qs = c.names.map(n => pts.find(q => q.p.name === n)).filter(q => q && q.v);
+      if (!qs.length) continue;
+      const ax = qs.reduce((a, q) => a + q.x, 0) / qs.length, ay = qs.reduce((a, q) => a + q.y, 0) / qs.length;
+      const k = narrow ? 0.7 : 1;
+      const groupW = c.names.length * size;
+      let gx = ax + c.dx * k - groupW / 2, gy = ay + c.dy * k - size / 2;
+      gx = Math.max(m.l + 2, Math.min(W - m.r - groupW - 2, gx));
+      gy = Math.max(m.t, Math.min(H - m.b - size - 14, gy));
+      const cg = svg("g", { "pointer-events": "none" }, s);
+      const tx = Math.max(gx, Math.min(gx + groupW, ax)), ty = ay < gy ? gy : (ay > gy + size ? gy + size : ay);
+      svg("line", { x1: ax, y1: ay, x2: tx, y2: ty, stroke: css("muted"), "stroke-width": 1 }, cg);
+      c.names.forEach((n, i) => {
+        const d = spriteDiv(byName.get(n).n, size);
+        Object.assign(d.style, { position: "absolute", left: gx + i * size + "px", top: gy + "px", pointerEvents: "none" });
+        host.append(d);
+      });
+      const t = svg("text", { x: gx + groupW / 2, y: gy + size + 11, "text-anchor": "middle", "font-size": 11, fill: css("ink-2"), "font-weight": 600 }, cg); t.textContent = c.label;
+    }
+    // hover: nearest visible point
+    const ring = svg("circle", { r: 8, fill: "none", stroke: css("ink"), "stroke-width": 2, visibility: "hidden", "pointer-events": "none" }, s);
+    const hit = svg("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" }, s);
+    function near(ev) {
+      const b = s.getBoundingClientRect(), px = ev.clientX - b.left, py = ev.clientY - b.top;
+      let best = null, bd = 30 * 30;
+      for (const q of pts) { if (!q.v) continue; const d = (q.x - px) ** 2 + (q.y - py) ** 2; if (d < bd) { bd = d; best = q; } }
+      return best;
+    }
+    hit.addEventListener("pointermove", ev => {
+      const q = near(ev);
+      if (!q) { ring.setAttribute("visibility", "hidden"); hideTip(); return; }
+      ring.setAttribute("cx", q.x); ring.setAttribute("cy", q.y); ring.setAttribute("visibility", "visible");
+      showTip(q.p, cfg.tip(q.p), ev.clientX, ev.clientY);
+    });
+    hit.addEventListener("pointerleave", () => { ring.setAttribute("visibility", "hidden"); hideTip(); });
+  }
+  render();
+  let w = host.clientWidth;
+  new ResizeObserver(() => { if (host.clientWidth !== w) { w = host.clientWidth; render(); } }).observe(host);
+  return { set(next) { state = { ...state, ...next }; render(); } };
+}
+
+function segmented(id, onChange) {
+  const g = document.getElementById(id);
+  g.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    for (const x of g.querySelectorAll("button")) x.setAttribute("aria-pressed", String(x === b));
+    onChange(b.dataset.v);
+  });
+}
+const rhoText = c => `ρ = ${fmt(c.rho, 2).replace("-", "−")} (95% confidence interval ${fmt(c.ci95[0], 2).replace("-", "−")} to ${fmt(c.ci95[1], 2).replace("-", "−")})`;
+
+/* ---------- hero wall ---------- */
+{
+  const wall = document.getElementById("wall");
+  for (const p of P) {
+    const t = html("div", { class: "tile", tabindex: "0", role: "img", "aria-label": `${p.name}, ${dex(p.n)}` }, wall);
+    t.append(spriteDiv(p.n, 40));
+    const show = e => { const b = t.getBoundingClientRect(); showTip(p, [["Type", p.t1 + (p.t2 ? " / " + p.t2 : "")], ["Strength", fmt(p.total)]], e.clientX ?? b.right, e.clientY ?? b.bottom); };
+    t.addEventListener("pointerenter", show); t.addEventListener("focus", () => { const b = t.getBoundingClientRect(); show({ clientX: b.right, clientY: b.bottom }); });
+    t.addEventListener("pointerleave", hideTip); t.addEventListener("blur", hideTip);
+  }
+}
+
+/* ---------- Q1, Fig. 2: permutation test explainer ---------- */
+{
+  const host = document.getElementById("shuffle");
+  const ex = ["Mewtwo", "Arcanine", "Pikachu", "Magikarp"].map(n => byName.get(n));
+  const order = { real: [0, 1, 2, 3], shuffled: [2, 0, 3, 1] };
+  function pairs(title, cap, perm) {
+    const f = html("figure", {}, host);
+    const s = svg("svg", { viewBox: "0 0 200 168", role: "img", "aria-label": cap }, f);
+    const t = svg("text", { x: 0, y: 12, "font-size": 12, "font-weight": 600, fill: "currentColor" }, s); t.textContent = title;
+    const h1 = svg("text", { x: 0, y: 32, "font-size": 10, fill: css("muted") }, s); h1.textContent = "Catch rate";
+    const h2 = svg("text", { x: 200, y: 32, "text-anchor": "end", "font-size": 10, fill: css("muted") }, s); h2.textContent = "Strength";
+    ex.forEach((p, i) => {
+      const y = 52 + i * 30, j = perm[i], y2 = 52 + j * 30;
+      const a = svg("text", { x: 0, y: y + 4, "font-size": 11, fill: "currentColor" }, s); a.textContent = `${p.name} ${p.catch}`;
+      const q = ex[i];
+      const b = svg("text", { x: 200, y: y2 + 4, "text-anchor": "end", "font-size": 11, fill: "currentColor" }, s); b.textContent = String(q.total);
+      svg("line", { x1: 112, y1: y, x2: 166, y2: y2, stroke: perm === order.real ? css("s1") : css("muted"), "stroke-width": 1.5 }, s);
+      svg("circle", { cx: 112, cy: y, r: 2.5, fill: "currentColor" }, s);
+      svg("circle", { cx: 166, cy: y2, r: 2.5, fill: "currentColor" }, s);
+    });
+  }
+  pairs("1. The real pairs", `Each Pokémon's catch rate is matched with its own strength. ρ = ${fmt(R.q1_rarity.overall.rho, 2)}.`, order.real);
+  pairs("2. Shuffle", "Strengths are dealt out at random, which breaks any real link. Calculate ρ again.", order.shuffled);
+  // 3. histogram of 10,000 shuffles
+  const f = html("figure", {}, host);
+  const W = 200, H = 168, l = 4, r = 196, base = 132;
+  const realRho = R.q1_rarity.overall.rho;
+  const s = svg("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `10,000 shuffled scores pile up around zero and never pass ${D.q1_null.max_abs_chance}. The real score of ${fmt(realRho, 2)} is far to the right.` }, f);
+  const t = svg("text", { x: 0, y: 12, "font-size": 12, "font-weight": 600, fill: "currentColor" }, s); t.textContent = "3. Repeat 10,000 times";
+  const X = linear(-1, 1, l, r), max = Math.max(...D.q1_null.counts), Y = linear(0, max, base, 40);
+  D.q1_null.counts.forEach((c, i) => { if (!c) return; const x0 = X(D.q1_null.edges[i]), x1 = X(D.q1_null.edges[i + 1]); svg("rect", { x: x0 + .25, width: Math.max(.5, x1 - x0 - .5), y: Y(c), height: base - Y(c), fill: css("dot") }, s); });
+  svg("line", { x1: l, x2: r, y1: base, y2: base, stroke: css("axis") }, s);
+  for (const v of [-1, 0, 1]) { const tx = svg("text", { x: X(v), y: base + 13, "text-anchor": v < 0 ? "start" : v > 0 ? "end" : "middle", "font-size": 10, fill: css("muted") }, s); tx.textContent = v === 0 ? "0" : (v > 0 ? "+1" : "−1"); }
+  svg("line", { x1: X(realRho), x2: X(realRho), y1: 44, y2: base, stroke: css("accent"), "stroke-width": 2 }, s);
+  const rl = svg("text", { x: X(realRho), y: 38, "text-anchor": "middle", "font-size": 11, "font-weight": 600, fill: "currentColor" }, s); rl.textContent = `Real: ${fmt(realRho, 2)}`;
+  const cl = svg("text", { x: X(0), y: 30, "text-anchor": "middle", "font-size": 10, fill: css("muted") }, s); cl.textContent = "Chance";
+}
+
+/* ---------- Q1 ---------- */
+{
+  const q = R.q1_rarity;
+  const colorOf = p => (p.q1 === "legendary" || p.q1 === "mythical") ? css("s1") : p.q1 === "best value" ? css("s3") : p.q1 === "worst value" ? css("s2") : null;
+  scatter(document.getElementById("c-q1"), {
+    aria: "Scatter plot of catch rate against strength. Harder-to-catch Pokémon are generally stronger.",
+    points: P,
+    x: { get: p => p.catch, domain: [262, -4], ticks: [255, 190, 120, 45, 3], ticksNarrow: [255, 120, 3], label: "Catch rate", ends: ["← Easy to catch", "Hard to catch →"] },
+    y: { get: p => p.total, domain: [150, 720], ticks: [200, 300, 400, 500, 600, 700], label: "Strength" },
+    jitter: p => ((p.n * 37) % 11 - 5) * 0.9,
+    color: colorOf,
+    callouts: [
+      { names: ["Mewtwo"], label: "Mewtwo", dx: -60, dy: 0 },
+      { names: ["Mew"], label: "Mew", dx: -10, dy: 50, wideOnly: 1 },
+      { names: ["Bulbasaur", "Charmander", "Squirtle"], label: "The starters", dx: -40, dy: 95 },
+      { names: ["Arcanine"], label: "Arcanine", dx: 0, dy: -62, wideOnly: 1 },
+      { names: ["Magikarp"], label: "Magikarp", dx: 70, dy: -30 },
+    ],
+    tip: p => [["Catch rate", `${p.catch} of 255`], ["Strength", fmt(p.total)]],
+  });
+  table(document.getElementById("t-q1"), [
+    { label: "#", get: p => dex(p.n) }, { label: "Pokémon", get: p => p.name },
+    { label: "Catch rate", num: 1, get: p => p.catch }, { label: "Strength", num: 1, get: p => p.total }, { label: "Note", get: p => p.q1 },
+  ], P);
+}
+
+/* ---------- Q2 ---------- */
+{
+  const q = R.q2_size, stageColor = [null, css("s1"), css("s2"), css("s3")];
+  const chart = scatter(document.getElementById("c-q2"), {
+    aria: "Scatter plot of weight against strength, coloured by evolution stage. Heavier Pokémon are stronger within every stage.",
+    points: P,
+    x: { get: p => p.w, log: true, domain: [0.08, 600], ticks: [0.1, 1, 10, 100], fmt: v => v + " kg", label: "Weight (log scale)" },
+    y: { get: p => p.total, domain: [150, 720], ticks: [200, 300, 400, 500, 600, 700], label: "Strength" },
+    color: p => stageColor[p.stage],
+    visible: (p, st) => !st.stage || p.stage === st.stage,
+    callouts: [
+      { names: ["Onix"], label: "Onix", dx: 40, dy: 70 },
+      { names: ["Gastly"], label: "Gastly", dx: 30, dy: 60, wideOnly: 1 },
+      { names: ["Snorlax"], label: "Snorlax", dx: -40, dy: 60 },
+    ],
+    tip: p => [["Weight", fmt(p.w, 1) + " kg"], ["Height", fmt(p.h, 1) + " m"], ["Strength", fmt(p.total)], ["Stage", ["", "First", "Second", "Third"][p.stage]]],
+  });
+  const r = document.getElementById("r-q2");
+  const say = v => {
+    r.replaceChildren();
+    if (v === "0") return;   // the text already gives the overall result
+    { const w = q.within_stage[v]; r.append(`${["", "First", "Second", "Third"][v]}-stage Pokémon only (${w.n}): `, Object.assign(document.createElement("b"), { textContent: rhoText(w.weight) }), "."); }
+  };
+  say("0");
+  segmented("seg-q2", v => { chart.set({ stage: +v }); say(v); });
+  table(document.getElementById("t-q2"), [
+    { label: "#", get: p => dex(p.n) }, { label: "Pokémon", get: p => p.name }, { label: "Stage", num: 1, get: p => p.stage },
+    { label: "Height (m)", num: 1, get: p => fmt(p.h, 1) }, { label: "Weight (kg)", num: 1, get: p => fmt(p.w, 1) }, { label: "Strength", num: 1, get: p => p.total },
+  ], P);
+}
+
+/* ---------- Q3 ---------- */
+{
+  const q = R.q3_speed;
+  const chart = scatter(document.getElementById("c-q3"), {
+    aria: "Scatter plot of speed against toughness, coloured by evolution group. No clear link overall; within each group, faster Pokémon are less tough.",
+    points: P,
+    x: { get: p => p.speed, domain: [10, 155], ticks: [25, 50, 75, 100, 125, 150], label: "Speed" },
+    y: { get: p => p.tough, domain: [70, 360], ticks: [100, 150, 200, 250, 300, 350], label: "Toughness (HP + Defence + Sp. Defence)" },
+    color: p => p.final ? css("s1") : css("s2"),
+    visible: (p, st) => !st.mode || st.mode === "all" || (st.mode === "final") === p.final,
+    corners: [{ x: "l", y: "t", text: "slow but tough" }, { x: "r", y: "t", text: "fast and tough" }, { x: "l", y: "b", text: "slow and fragile" }, { x: "r", y: "b", text: "fast but fragile" }],
+    callouts: [
+      { names: ["Snorlax"], label: "Snorlax", dx: 55, dy: 10 },
+      { names: ["Slowbro"], label: "Slowbro", dx: 60, dy: 30, wideOnly: 1 },
+      { names: ["Alakazam", "Dugtrio"], label: "Alakazam, Dugtrio", dx: -30, dy: 65 },
+      { names: ["Mewtwo"], label: "Mewtwo", dx: -60, dy: -10 },
+      { names: ["Metapod"], label: "Metapod", dx: 50, dy: -20, wideOnly: 1 },
+    ],
+    tip: p => [["Speed", p.speed], ["Toughness", p.tough], ["Fully evolved", p.final ? "Yes" : "No"]],
+  });
+  const r = document.getElementById("r-q3");
+  const say = v => {
+    r.replaceChildren();
+    if (v === "all") return;   // the text already gives the overall result
+    if (v === "young") r.append(`Not yet fully evolved (${q.not_fully_evolved.n}): `, Object.assign(document.createElement("b"), { textContent: rhoText(q.not_fully_evolved) }), ".");
+    else r.append(`Fully evolved (${q.fully_evolved.n}): `, Object.assign(document.createElement("b"), { textContent: rhoText(q.fully_evolved) }), ".");
+  };
+  say("all");
+  segmented("seg-q3", v => { chart.set({ mode: v }); say(v); });
+  table(document.getElementById("t-q3"), [
+    { label: "#", get: p => dex(p.n) }, { label: "Pokémon", get: p => p.name }, { label: "Speed", num: 1, get: p => p.speed },
+    { label: "Toughness", num: 1, get: p => p.tough }, { label: "Fully evolved", get: p => p.final ? "Yes" : "No" },
+  ], P);
+}
+
+/* ---------- Q4 ---------- */
+{
+  const host = document.getElementById("c-q4");
+  const types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon"];
+  const swatch = { brown: "#9a6233", blue: "#3d72d9", purple: "#8b56b8", yellow: "#efc935", red: "#d6463c", pink: "#f0a3c1", green: "#4ea852", gray: "#9b9a96", white: "#f5f5f2", black: "#262626" };
+  const grid = new Map(D.q4_grid.map(g => [g.color + "|" + g.type, g]));
+  const colours = [...new Set(D.q4_grid.map(g => g.color))].sort((a, b) => grid.get(b + "|Normal").color_n - grid.get(a + "|Normal").color_n);
+  const top = new Set(R.q4_colour.top_pairs.map(t => t.color + "|" + t.type));
+  host.style.gridTemplateColumns = `minmax(6.5rem, auto) repeat(${types.length}, minmax(30px, 1fr))`;
+  html("div", { role: "columnheader" }, host);
+  for (const t of types) html("div", { class: "hd", role: "columnheader" }, host, t);
+  const step = s => s === 0 ? 0 : s <= .1 ? 1 : s <= .2 ? 2 : s <= .35 ? 3 : s <= .5 ? 4 : 5;
+  for (const c of colours) {
+    const n = grid.get(c + "|Normal").color_n;
+    const h = html("div", { class: "rowhd", role: "rowheader" }, host);
+    const i = html("i", {}, h); i.style.background = swatch[c];
+    html("span", {}, h, c[0].toUpperCase() + c.slice(1));
+    html("em", {}, h, String(n));
+    for (const t of types) {
+      const g = grid.get(c + "|" + t), k = step(g.share);
+      const cell = html("div", { class: "cell" + (top.has(c + "|" + t) ? " top" : ""), role: "cell", "aria-label": `${c} ${t}: ${g.count} of ${n}` }, host, g.count ? String(g.count) : "");
+      cell.style.background = k ? css("seq" + k) : "transparent";
+      cell.style.color = k >= 4 ? css("seqt-hi") : css("seqt-lo");
+      if (g.count) cell.title = `${g.count} of ${n} ${c} Pokémon are ${t} (${Math.round(g.share * 100)}%). Average across all colours: ${Math.round(g.overall_share * 100)}%.`;
+    }
+  }
+}
+
+/* ---------- Q5 ---------- */
+{
+  const host = document.getElementById("c-q5"), btn = document.getElementById("q5-more");
+  const pairs = D.q5_pairs; // sorted by gain, biggest first
+  const X = v => ((v - 150) / (700 - 150) * 100);
+  let all = false;
+  function row(parent, p) {
+    const who = html("div", { class: "who" }, parent);
+    who.append(spriteDiv(p.from_num, 28), spriteDiv(p.to_num, 28));
+    html("span", {}, who, `${p.from} → ${p.to}`);
+    const tr = html("div", { class: "track", role: "img", "aria-label": `${p.from} ${p.from_total} to ${p.to} ${p.to_total}` }, parent);
+    const ln = html("div", { class: "line" }, tr); ln.style.left = X(p.from_total) + "%"; ln.style.width = (X(p.to_total) - X(p.from_total)) + "%";
+    const a = html("div", { class: "a" }, tr); a.style.left = X(p.from_total) + "%";
+    const b = html("div", { class: "b" }, tr); b.style.left = X(p.to_total) + "%";
+    a.title = `${p.from}: ${p.from_total}`; b.title = `${p.to}: ${p.to_total}`;
+    html("div", { class: "gain" }, parent, "+" + Math.round(p.gain_pct) + "%");
+  }
+  function render() {
+    host.replaceChildren();
+    const g = html("div", { class: "dumb" }, host);
+    html("div", {}, g);
+    const ax = html("div", { class: "axis" }, g);
+    for (const t of [200, 300, 400, 500, 600]) { const s = html("span", {}, ax, String(t)); s.style.left = X(t) + "%"; }
+    html("div", { class: "axis", style: "text-align:right" }, g, "Gain");
+    if (all) pairs.forEach(p => row(g, p));
+    else {
+      pairs.slice(0, 5).forEach(p => row(g, p));
+      html("div", { class: "gap" }, g, `… ${pairs.length - 10} more in between …`);
+      pairs.slice(-5).forEach(p => row(g, p));
+    }
+    btn.textContent = all ? "Show only the extremes" : `Show all ${pairs.length} evolutions`;
+    btn.setAttribute("aria-expanded", String(all));
+  }
+  btn.addEventListener("click", () => { all = !all; render(); });
+  render();
+}
+
+/* ---------- machine learning finale ---------- */
+{
+  const m = R.model, best = m.scores[m.best_model], base = m.scores["Guess the average (baseline)"];
+  document.getElementById("v-base").textContent = Math.round(base.typical_error_points);
+  document.getElementById("v-ai").textContent = Math.round(best.typical_error_points);
+  const surprise = new Set(["Onix", "Ditto", "Mew", "Mewtwo"]);
+  scatter(document.getElementById("c-ai"), {
+    aria: "Scatter plot of real strength against predicted strength. Most dots sit near the diagonal.",
+    points: P,
+    x: { get: p => p.total, domain: [150, 720], ticks: [200, 300, 400, 500, 600, 700], label: "Real strength" },
+    y: { get: p => p.ai, domain: [150, 720], ticks: [200, 300, 400, 500, 600, 700], label: "Predicted strength" },
+    diag: true,
+    color: p => surprise.has(p.name) ? css("s2") : css("s1"),
+    callouts: [
+      { names: ["Onix"], label: "Onix", dx: -55, dy: 25 },
+      { names: ["Ditto"], label: "Ditto", dx: -50, dy: 5, wideOnly: 1 },
+      { names: ["Mew"], label: "Mew", dx: 0, dy: 65 },
+      { names: ["Mewtwo"], label: "Mewtwo", dx: -55, dy: 25, wideOnly: 1 },
+    ],
+    tip: p => [["Real strength", fmt(p.total)], ["Predicted", fmt(p.ai)], ["Error", (p.ai > p.total ? "+" : "−") + Math.abs(p.ai - p.total)]],
+  });
+  table(document.getElementById("t-ai"), [
+    { label: "#", get: p => dex(p.n) }, { label: "Pokémon", get: p => p.name }, { label: "Real", num: 1, get: p => p.total },
+    { label: "Predicted", num: 1, get: p => p.ai }, { label: "Error", num: 1, get: p => p.ai - p.total },
+  ], P);
+  const imp = document.getElementById("c-imp"), mx = Math.max(...m.importance.map(i => i.extra_error_points));
+  for (const i of m.importance) {
+    const b = html("div", { class: "bar" }, imp);
+    html("div", {}, b, ({ "Rarity (catch rate)": "Catch rate", "Legendary": "Legendary or mythical" })[i.clue] || i.clue);
+    const tr = html("div", { class: "track" }, b);
+    const v = Math.max(0, i.extra_error_points), pct = v / mx * 60;
+    const f = html("div", { class: "fill" }, tr); f.style.width = pct + "%";
+    const t = html("div", { class: "val" }, tr, v < 0.5 ? "no difference" : `+${fmt(v, 1)} points`); t.style.left = pct + "%";
+  }
+}
+
+/* ---------- Q6, Fig. 7: the model's input table, as pandas prints it ---------- */
+{
+  const host = document.getElementById("c-raw"), btn = document.getElementById("raw-more");
+  const colours = ["black", "blue", "brown", "gray", "green", "pink", "purple", "red", "white", "yellow"];
+  const cols = ["log_height", "log_weight", "capture_rate", "evo_stage", "fully_evolved", "legendary", ...colours.map(c => "colour_" + c), "strength"];
+  const f2 = v => v.toFixed(2);
+  const rowOf = p => [f2(Math.log(p.h)), f2(Math.log(p.w)), String(p.catch), String(p.stage), p.final ? "1" : "0",
+    (p.legendary || p.mythical) ? "1" : "0", ...colours.map(c => p.color === c ? "1" : "0"), String(p.total)];
+  const sample = ["Bulbasaur", "Pikachu", "Onix", "Magikarp", "Gyarados", "Mewtwo"].map(n => byName.get(n));
+  let all = false;
+  function render() {
+    const ps = all ? P : sample, rows = ps.map(rowOf);
+    const iw = Math.max(...ps.map(p => p.name.length));
+    const w = cols.map((c, j) => Math.max(c.length, ...rows.map(r => r[j].length)));
+    const line = (idx, cells) => idx.padEnd(iw) + cells.map((v, j) => "  " + v.padStart(w[j])).join("");
+    const out = [line("", cols), ...ps.map((p, i) => line(p.name, rows[i])), "", `[${ps.length} rows x ${cols.length} columns]   (${cols.length - 1} inputs + strength, the target)`];
+    host.textContent = out.join("\n");
+    btn.textContent = all ? "Show 6 rows" : "Show all 151 rows";
+    btn.setAttribute("aria-expanded", String(all));
+  }
+  btn.addEventListener("click", () => { all = !all; render(); });
+  render();
+}
+
+/* ---------- appendix table ---------- */
+{
+  const rows = Object.entries(R.appendix_multiple_testing).map(([k, v]) => ({ k, ...v }));
+  const pf = p => p < 0.001 ? "< 0.001" : fmt(p, 3);
+  table(document.getElementById("t-tests"), [
+    { label: "Test", get: r => r.k }, { label: "p-value", num: 1, get: r => pf(r.p) }, { label: "Adjusted p-value", num: 1, get: r => pf(r.p_adjusted_BH) },
+  ], rows);
+}
+</script>
