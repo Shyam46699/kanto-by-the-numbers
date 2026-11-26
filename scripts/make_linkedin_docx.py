@@ -3,7 +3,7 @@
 Reads:   linkedin/article.html, linkedin/images/*.png
 Writes:  linkedin/Kanto by the Numbers - LinkedIn article.docx
 
-A4, 2.54 cm margins (matching the author's earlier LinkedIn drafts), Georgia.
+A4, 2.54 cm margins, Georgia.
 Images sit inline with their captions; publishing notes go at the end.
 
 Usage:  ~/.venvs/pokemon-ml/bin/python scripts/make_linkedin_docx.py

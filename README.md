@@ -69,7 +69,7 @@ Every random step uses a fixed seed (42), so the results are reproducible.
 ## References
 
 1. PokéAPI, the RESTful Pokémon API. https://pokeapi.co. Height, weight, colour, catch rate, evolution chains and original types.
-2. Lomuscio, M. Pokemon (stats for Generations 1–6). Kaggle. https://www.kaggle.com/datasets/mlomuscio/pokemon. Battle stats (values used in current games) and legendary status.
+2. Lomuscio, M. Pokemon (stats for Generations 1–6). Kaggle. https://www.kaggle.com/datasets/mlomuscio/pokemon. Battle stats (values used in later games) and legendary status.
 3. RogerKoala. Pokemon (151 first-generation Pokémon). Kaggle. https://www.kaggle.com/datasets/rogerkoala/first-gen-pokemon. Original Red/Blue artwork.
 4. Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830.
 
