@@ -462,12 +462,20 @@ function showTip(p, rows, cx, cy) {
   tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
 }
 const hideTip = () => { tip.hidden = true; };
-// The pop-up is fixed to the screen and the pointer does not "leave" a dot when the page scrolls under it,
-// so close the pop-up and any hover ring whenever the page or a scrollable box on it scrolls.
-document.addEventListener("scroll", () => {
+// The pop-up is fixed to the screen, and browsers (Safari especially) do not report the pointer "leaving" a dot
+// when the page scrolls under it. So close the pop-up and any hover ring when scrolling starts or happens,
+// and whenever the pointer moves over anything that is not a chart or the Pokémon wall.
+const hideHover = () => {
   if (!tip.hidden) hideTip();
   for (const r of document.querySelectorAll(".hover-ring")) r.setAttribute("visibility", "hidden");
-}, { capture: true, passive: true });
+};
+document.addEventListener("scroll", hideHover, { capture: true, passive: true });
+addEventListener("wheel", hideHover, { passive: true });
+addEventListener("touchmove", hideHover, { passive: true });
+addEventListener("blur", hideHover);
+document.addEventListener("pointermove", e => {
+  if (!tip.hidden && !(e.target instanceof Element && e.target.closest(".chart, #wall"))) hideHover();
+}, { passive: true });
 
 /* ---------- scales ---------- */
 function linear(d0, d1, r0, r1) { const f = v => r0 + (v - d0) / (d1 - d0) * (r1 - r0); f.d = [d0, d1]; return f; }
