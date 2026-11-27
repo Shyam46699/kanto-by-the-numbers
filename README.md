@@ -79,4 +79,6 @@ The code is released under the MIT Licence (see `LICENSE`).
 
 Pokémon and all character artwork are © Nintendo, Creatures Inc. and GAME FREAK; artwork by Ken Sugimori. The artwork in `docs/sprites.webp` and `figures/` is not covered by the MIT Licence. This is an unofficial fan project for learning and fun.
 
+The analysis, code and interactive page were built using Claude (Anthropic).
+
 Author: Ghanashyam Danam
