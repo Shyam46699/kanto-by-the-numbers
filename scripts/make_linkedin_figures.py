@@ -1,7 +1,7 @@
 """Static chart images and cover for the LinkedIn version of the article.
 
 Reads:   docs/data.json, docs/sprites.webp, assets/fonts/*.ttf (fonts: see README)
-Writes:  linkedin/images/*.png  (1600 px wide figures, 1920 x 1080 cover)
+Writes:  linkedin/images/*.png  (2400 px wide figures, 1920 x 1080 cover)
 
 Figures carry no title, only a legend where the marks need one; the article's captions name them.
 Explanations live in the article text and captions; sources live in the references.
@@ -52,11 +52,17 @@ def sprite(n):
     return np.asarray(SHEET.crop(((i % COLS) * T, (i // COLS) * T, (i % COLS + 1) * T, (i // COLS + 1) * T)))
 
 
+# Figures are laid out on an 8-inch design canvas but drawn at 80% of that size, so all text,
+# markers and sprites come out 25% larger relative to the image. LinkedIn shows article images
+# about 750 px wide; larger text stays legible after that shrink. DPI 375 gives 2400 px wide PNGs.
+SCALE, DPI = 0.8, 375
+
+
 def frame(h=5.0, w=8.0):
     """Blank figure; figures carry no title (the article's caption names them).
     Returns the figure and the fraction of height where the plot area may start."""
-    fig = plt.figure(figsize=(w, h), dpi=200)
-    return fig, 1 - .1 / h
+    fig = plt.figure(figsize=(w * SCALE, h * SCALE), dpi=DPI)
+    return fig, 1 - .1 / (h * SCALE)
 
 
 def callout(ax, names, label, dx, dy, zoom=.3):
@@ -81,7 +87,7 @@ def tag(ax, name, xytext, ha="left"):
 
 
 def save(fig, name):
-    fig.savefig(OUT / name, dpi=200, facecolor=C["bg"])
+    fig.savefig(OUT / name, dpi=DPI, facecolor=C["bg"])
     plt.close(fig)
     print("wrote", name)
 
@@ -93,7 +99,7 @@ def fig_shuffle():
     ax = fig.add_axes([.07, .16, .88, top - .2])
     e = np.array(q["edges"]); ax.bar(e[:-1], q["counts"], width=np.diff(e) * .9, align="edge", color=C["dot"])
     ax.axvline(rho, color=C["accent"], lw=2)
-    ax.text(rho, max(q["counts"]) * .95, "  Real data: %.2f" % rho, color=C["accent"], size=10, weight="bold", va="top")
+    ax.text(rho, max(q["counts"]) * .95, "Real data: %.2f  " % rho, color=C["accent"], size=10, weight="bold", va="top", ha="right")
     ax.text(0, max(q["counts"]) * 1.04, "10,000 shuffles", ha="center", size=9, color=C["ink2"])
     ax.set_xlim(-1, 1); ax.set_yticks([]); ax.grid(False)
     ax.spines["bottom"].set_visible(True)
@@ -105,7 +111,7 @@ def fig_shuffle():
 # ---------------------------------------------------------------- Q1
 def fig_q1():
     fig, top = frame(h=4.5)
-    ax = fig.add_axes([.08, .13, .88, top - .2])
+    ax = fig.add_axes([.08, .13, .88, top - .27])
     col = {"legendary": C["s1"], "mythical": C["s1"], "best value": C["s3"], "worst value": C["s2"]}
     jit = lambda p: ((p["n"] * 37) % 11 - 5) * 0.9
     ax._getx = lambda p: p["catch"] + jit(p); ax._gety = lambda p: p["total"]
@@ -121,12 +127,12 @@ def fig_q1():
     callout(ax, ["Bulbasaur", "Charmander", "Squirtle"], "The starters", -60, -40)
     callout(ax, ["Magikarp"], "Magikarp", 45, 20)
     for n, xy, ha in [("Ninetales", (118, 540), "right"), ("Golduck", (118, 510), "right"), ("Muk", (118, 480), "right"),
-                      ("Cloyster", (52, 578), "center"), ("Ditto", (22, 255), "left"), ("Dratini", (22, 345), "left")]:
+                      ("Cloyster", (58, 560), "center"), ("Ditto", (22, 255), "left"), ("Dratini", (22, 345), "left")]:
         tag(ax, n, xy, ha)
     for lab, c in [("Legendary or mythical", C["s1"]), ("Best value for its catch rate", C["s3"]),
                    ("Worst value for its catch rate", C["s2"]), ("Everyone else", C["dot"])]:
         ax.scatter([], [], s=30, c=c, label=lab)
-    ax.legend(loc="lower left", bbox_to_anchor=(-.01, 1.0), ncol=4, frameon=False, fontsize=8.5, handletextpad=.1, columnspacing=1)
+    ax.legend(loc="lower left", bbox_to_anchor=(-.01, 1.0), ncol=2, frameon=False, fontsize=8.5, handletextpad=.1, columnspacing=1.5)
     save(fig, "03-rarity.png")
 
 
@@ -174,7 +180,7 @@ def fig_q3():
         if i == 2:
             callout(ax, ["Snorlax"], "Snorlax", 30, -6, zoom=.22)
             callout(ax, ["Alakazam"], "Alakazam", 2, -34, zoom=.22)
-            callout(ax, ["Mewtwo"], "Mewtwo", -34, 4, zoom=.22)
+            callout(ax, ["Mewtwo"], "Mewtwo", -8, 36, zoom=.22)
     ax0 = fig.axes[0]
     ax0.scatter([], [], s=24, c=C["s2"], label="Not yet fully evolved"); ax0.scatter([], [], s=24, c=C["s1"], label="Fully evolved")
     ax0.legend(loc="lower left", bbox_to_anchor=(-.02, 1.09), ncol=2, frameon=False, fontsize=8.5, handletextpad=.1, columnspacing=1)
@@ -190,7 +196,7 @@ def fig_q4():
     sw = {"brown": "#9a6233", "blue": "#3d72d9", "purple": "#8b56b8", "yellow": "#efc935", "red": "#d6463c",
           "pink": "#f0a3c1", "green": "#4ea852", "gray": "#9b9a96", "white": "#f5f5f2", "black": "#262626"}
     fig, top = frame(h=4.8)
-    ax = fig.add_axes([.2, .13, .77, top - .25]); ax.grid(False)
+    ax = fig.add_axes([.2, .13, .74, top - .25]); ax.grid(False)
     step = lambda s: 0 if s == 0 else 1 if s <= .1 else 2 if s <= .2 else 3 if s <= .35 else 4 if s <= .5 else 5
     for yi, c in enumerate(colours):
         for xi, t in enumerate(types):
@@ -209,12 +215,12 @@ def fig_q4():
     ax.spines["bottom"].set_visible(False)
     # legend: shade key + outline key, below the grid
     lx, ly, s = .06, .045, .022
-    fig.text(lx, ly + s * .8, "Share of the colour with this type:", size=8.5, color=C["ink2"], va="center")
+    fig.text(lx, ly + s * .8, "Share of colour:", size=8.5, color=C["ink2"], va="center")
     for k, lab in enumerate(["≤10%", "≤20%", "≤35%", "≤50%", ">50%"], start=1):
-        x = lx + .24 + (k - 1) * .08
+        x = lx + .17 + (k - 1) * .1
         fig.add_artist(Rectangle((x, ly), s * 1.3, s * 1.6, color=SEQ[k], ec=C["axis"] if k == 1 else "none", lw=.5, transform=fig.transFigure))
         fig.text(x + s * 1.3 + .006, ly + s * .8, lab, size=8, color=C["ink2"], va="center")
-    ox = lx + .24 + 5 * .08 + .02
+    ox = lx + .17 + 5 * .1 + .02
     fig.add_artist(Rectangle((ox, ly), s * 1.3, s * 1.6, fill=False, ec=C["ink"], lw=1.8, transform=fig.transFigure))
     fig.text(ox + s * 1.3 + .006, ly + s * .8, "strongest links", size=8, color=C["ink2"], va="center")
     save(fig, "06-colour-and-type.png")
@@ -236,9 +242,9 @@ def fig_q5():
         ax.text(720, y, f"+{round(r['gain_pct'])}%", va="center", ha="right", size=9.5, weight="bold")
         ax_x = lambda fx: (fx - .42) / .47          # figure fraction -> axes fraction
         for k, num in enumerate((r["from_num"], r["to_num"])):
-            ax.add_artist(AnnotationBbox(OffsetImage(sprite(num), zoom=.2), (ax_x(.065 + k * .038), y),
+            ax.add_artist(AnnotationBbox(OffsetImage(sprite(num), zoom=.2), (ax_x(.065 + k * .046), y),
                                          xycoords=ax.get_yaxis_transform(), frameon=False, annotation_clip=False))
-        ax.text(ax_x(.128), y, f"{r['from']} → {r['to']}", transform=ax.get_yaxis_transform(), va="center", size=9)
+        ax.text(ax_x(.14), y, f"{r['from']} → {r['to']}", transform=ax.get_yaxis_transform(), va="center", size=9)
     ax.set_xlim(150, 725); ax.set_ylim(-.7, len(rows) - .3)
     ax.set_xticks([200, 300, 400, 500, 600]); ax.set_yticks([]); ax.tick_params(labelsize=8.5)
     ax.xaxis.tick_top(); ax.spines["bottom"].set_visible(False)
@@ -302,8 +308,9 @@ def fig_snapshot():
     text = show.to_string(float_format=lambda v: f"{v:.2f}")
     text += f"\n\n[6 rows x {X.shape[1]} columns]   ({X.shape[1] - 1} inputs + strength, the target)"
     lines = text.split("\n")
-    size = min(9.0, .95 * 8 * 72 / (.602 * max(map(len, lines))))   # monospace: fit the longest line to the width
-    fig = plt.figure(figsize=(8, .35 + size * 1.55 / 72 * len(lines)), dpi=200)
+    W = 8 * SCALE
+    size = min(9.0, .95 * W * 72 / (.602 * max(map(len, lines))))   # monospace: fit the longest line to the width
+    fig = plt.figure(figsize=(W, .35 + size * 1.55 / 72 * len(lines)), dpi=DPI)
     fig.text(.025, .5, text, family=["Menlo", "DejaVu Sans Mono"], size=size, va="center", ha="left",
              color=C["ink"], linespacing=1.55)
     save(fig, "10-data-snapshot.png")
