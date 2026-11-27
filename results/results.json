@@ -614,6 +614,14 @@
         "ai_guess": 470,
         "miss": -118
       }
-    ]
+    ],
+    "permutation_test": {
+      "method": "permutation_test_score, 1000 shuffles of strength, 5-fold CV",
+      "real_mae": 33.5,
+      "shuffled_mae_best": 76.6,
+      "shuffled_mae_median": 90.4,
+      "n_permutations": 1000,
+      "p": 0.000999000999000999
+    }
   }
 }

@@ -341,7 +341,7 @@ td.num, th.num { text-align: right; }
   <div class="col after">
     <p>The model is a <b>random forest</b>, a <b>bagged ensemble</b> of 500 <b>decision trees</b> built with the scikit-learn library. Each tree learns a sequence of yes-or-no splits, such as “Is it fully evolved?” or “Does it weigh more than 50 kg?”, from its own <b>bootstrap sample</b> of the data, and the forest averages the 500 predictions.</p>
     <p>A model must be tested on Pokémon it has not seen, otherwise it can simply memorise the answers. The model was therefore evaluated with <b>leave-one-out cross-validation</b>. It was trained on 150 Pokémon and asked to predict the one left out, and this was repeated until every Pokémon had been predicted once.</p>
-    <p>Accuracy is reported as the <b>mean absolute error</b>, the average distance between the predicted and the true strength. The random forest's mean absolute error is <span id="v-ai">32</span> points (Fig. 8). For comparison, a <b>baseline</b> that predicts the average strength for every Pokémon is off by <span id="v-base">86</span> points, so the model reduces the error by about 63%. A linear regression, which fits a single weighted sum of the features, performed almost identically. This suggests that with a dataset this small and relationships this simple, the more flexible random forest offers little extra.</p>
+    <p>Accuracy is reported as the <b>mean absolute error</b>, the average distance between the predicted and the true strength. The random forest's mean absolute error is <span id="v-ai">32</span> points (Fig. 8). For comparison, a <b>baseline</b> that predicts the average strength for every Pokémon is off by <span id="v-base">86</span> points, so the model reduces the error by about 63%, and a permutation test confirms this is not down to chance. A linear regression, which fits a single weighted sum of the features, performed almost identically. This suggests that with a dataset this small and relationships this simple, the more flexible random forest offers little extra.</p>
   </div>
   <div class="plate">
     <div class="plate-top">
@@ -396,6 +396,7 @@ td.num, th.num { text-align: right; }
     <ul>
       <li>A random forest regression model (500 decision trees, minimum two Pokémon per leaf, scikit-learn) predicted strength from log height, log weight, one-hot colour, catch rate, evolution stage, whether fully evolved, and legendary or mythical status.</li>
       <li>Leave-one-out cross-validation means every one of the 151 predictions came from a model that never saw that Pokémon. A linear regression model (ridge regression) did almost exactly as well, with a mean absolute error of 32.1 points against 31.5.</li>
+      <li>A permutation test of the whole model shuffled the strength values 1,000 times, retraining and scoring the random forest each time with 5-fold cross-validation. The real model's mean absolute error was 33.5 points, while the best of the 1,000 shuffled models reached only 76.6 (median 90.4), so p &lt; 0.001.</li>
       <li>Permutation feature importance shuffled one group of features at a time across 50 train-and-test splits (5-fold cross-validation, repeated 10 times).</li>
     </ul>
     <h3>References</h3>

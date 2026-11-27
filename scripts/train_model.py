@@ -20,7 +20,7 @@ from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import RidgeCV
 from sklearn.metrics import mean_absolute_error, r2_score
-from sklearn.model_selection import LeaveOneOut, RepeatedKFold, cross_val_predict
+from sklearn.model_selection import KFold, LeaveOneOut, RepeatedKFold, cross_val_predict, permutation_test_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -84,6 +84,22 @@ def group_importance(model, X, y, groups, n_repeats=10):
     }).sort_values("extra_error_points", ascending=False)
 
 
+def model_permutation_test(X, y, n_permutations=1000):
+    """Is the forest's accuracy better than chance? Shuffle the strength values, retrain and
+    re-score (5-fold cross-validation) many times; p = share of shuffles that do as well as
+    the real data. Uses 5-fold rather than leave-one-out to keep thousands of refits feasible."""
+    rf = RandomForestRegressor(n_estimators=500, min_samples_leaf=2, random_state=SEED, n_jobs=1)
+    cv = KFold(n_splits=5, shuffle=True, random_state=SEED)
+    score, perm_scores, p = permutation_test_score(
+        rf, X, y, cv=cv, n_permutations=n_permutations, scoring="neg_mean_absolute_error",
+        random_state=SEED, n_jobs=-1)
+    return {"method": f"permutation_test_score, {n_permutations} shuffles of strength, 5-fold CV",
+            "real_mae": round(float(-score), 1),
+            "shuffled_mae_best": round(float(-perm_scores.max()), 1),
+            "shuffled_mae_median": round(float(-np.median(perm_scores)), 1),
+            "n_permutations": n_permutations, "p": float(p)}
+
+
 def main():
     df = pd.read_csv(DATA, keep_default_na=False)
     assert len(df) == 151
@@ -121,6 +137,7 @@ def main():
         "scores": scores, "best_model": best, "beats_baseline": beats_baseline,
         "error_reduction_vs_baseline_pct": round((1 - scores[best]["typical_error_points"] / baseline) * 100, 1),
         "importance": importance.to_dict("records"),
+        "permutation_test": model_permutation_test(X, y),
         "stronger_than_it_looks": ranked.iloc[::-1].head(5)[["name", "total", "ai_guess", "miss"]].to_dict("records"),
         "weaker_than_it_looks": ranked.head(5)[["name", "total", "ai_guess", "miss"]].to_dict("records"),
     }
@@ -130,4 +147,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--permutation-test-only" in sys.argv:   # add the test to existing results without refitting everything
+        df = pd.read_csv(DATA, keep_default_na=False); X, _ = features(df)
+        path = OUT / "results.json"; results = json.loads(path.read_text())
+        results["model"]["permutation_test"] = model_permutation_test(X, df["total"])
+        path.write_text(json.dumps(results, indent=2, default=str, ensure_ascii=False))
+        print(results["model"]["permutation_test"])
+    else:
+        main()
