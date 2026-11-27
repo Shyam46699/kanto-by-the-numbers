@@ -462,6 +462,12 @@ function showTip(p, rows, cx, cy) {
   tip.style.left = Math.max(8, x) + "px"; tip.style.top = Math.max(8, y) + "px";
 }
 const hideTip = () => { tip.hidden = true; };
+// The pop-up is fixed to the screen and the pointer does not "leave" a dot when the page scrolls under it,
+// so close the pop-up and any hover ring whenever the page or a scrollable box on it scrolls.
+document.addEventListener("scroll", () => {
+  if (!tip.hidden) hideTip();
+  for (const r of document.querySelectorAll(".hover-ring")) r.setAttribute("visibility", "hidden");
+}, { capture: true, passive: true });
 
 /* ---------- scales ---------- */
 function linear(d0, d1, r0, r1) { const f = v => r0 + (v - d0) / (d1 - d0) * (r1 - r0); f.d = [d0, d1]; return f; }
@@ -538,7 +544,7 @@ function scatter(host, cfg) {
       const t = svg("text", { x: gx + groupW / 2, y: gy + size + 11, "text-anchor": "middle", "font-size": 11, fill: css("ink-2"), "font-weight": 600 }, cg); t.textContent = c.label;
     }
     // hover: nearest visible point
-    const ring = svg("circle", { r: 8, fill: "none", stroke: css("ink"), "stroke-width": 2, visibility: "hidden", "pointer-events": "none" }, s);
+    const ring = svg("circle", { class: "hover-ring", r: 8, fill: "none", stroke: css("ink"), "stroke-width": 2, visibility: "hidden", "pointer-events": "none" }, s);
     const hit = svg("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" }, s);
     function near(ev) {
       const b = s.getBoundingClientRect(), px = ev.clientX - b.left, py = ev.clientY - b.top;
